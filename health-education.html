@@ -84,7 +84,7 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
     grid-auto-flow: dense;
-    align-items: start; /* cards size to their own content, not neighbours */
+    align-items: stretch;
   }
   .dc-card {
     background: var(--white);
@@ -95,12 +95,20 @@
     flex-direction: column;
     transition: box-shadow .18s, transform .18s;
     cursor: default;
-    height: auto; /* let card grow with content, not match row height */
+    height: 100%;
   }
   .dc-img-wrap {
     border-radius: 14px 14px 0 0;
     overflow: hidden;
     flex-shrink: 0;
+  }
+  .dc-tall .dc-img-wrap {
+    flex: 1;
+    border-radius: 0;
+    position: relative;
+  }
+  .dc-tall .dc-body {
+    flex: 0 0 auto;
   }
   .dc-card:hover { box-shadow: 0 6px 24px rgba(0,33,71,.10); transform: translateY(-2px); }
   /* sizes */
@@ -111,7 +119,7 @@
   .dc-img-wrap { position: relative; flex-shrink: 0; }
   .dc-std  .dc-img-wrap { height: 160px; }
   .dc-wide .dc-img-wrap { height: 180px; }
-  .dc-tall .dc-img-wrap { height: 320px; flex-shrink: 0; }
+  .dc-tall .dc-img-wrap { height: 100%; min-height: 280px; }
   .dc-tall { min-height: 420px; }
   .dc-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s; }
   .dc-card:hover .dc-img { transform: scale(1.04); }
@@ -141,11 +149,12 @@
   .dc-more-btn::after { content: '↓'; font-size: 11px; transition: transform .2s; }
   .dc-more-btn.open::after { transform: rotate(180deg); }
   .dc-detail {
-    display: none !important; margin-top: 10px;
+    display: none; margin-top: 10px;
     padding-top: 10px; border-top: .5px solid var(--border);
     font-size: 12px; color: var(--text-secondary); line-height: 1.7;
+    animation: fadeIn .2s ease;
   }
-  .dc-detail.open { display: block !important; animation: fadeIn .2s ease; }
+  .dc-detail.open { display: block; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
   /* responsive */
   .coming-soon-box {
@@ -201,9 +210,6 @@
     border-top: .5px solid rgba(255,255,255,.06);
   }
 
-  /* ── GRID: stable image heights when cards expand ── */
-  /* align-items:start is set on .discover-grid above */
-
 </style>
 </head>
 <body>
@@ -244,17 +250,42 @@
 
         <!-- ═══ QUESTION CARDS GO HERE ═══ -->
 
-        <!-- CARD 1: Who gets fatty liver disease? -->
+        <!-- CARD 1: Who gets fatty liver disease -->
         <div class="dc-card dc-tall" data-topic="fatty-liver">
-          <div class="dc-img-wrap">
-            <img src="https://cdn.openviowebsites.com/source/sites/5fffbbb1-4aa2-401c-9b6f-663be1605a7b/images/childhood-obesity-and-fast-food-how-everyday-choices-shape-kids-health.jpg?v=083620251136085758981" alt="Childhood obesity and fast food food choices" class="dc-img">
+                    <div class="dc-img-wrap" style="background:#0a1628;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+  <rect width="400" height="200" fill="#0a1628"/>
+  <ellipse cx="290" cy="100" rx="90" ry="70" fill="#c9a84c" opacity=".07"/>
+  <circle cx="200" cy="75" r="28" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity=".7"/>
+  <path d="M180,103 Q200,160 220,103" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity=".7"/>
+  <line x1="200" y1="103" x2="200" y2="140" stroke="#c9a84c" stroke-width="1.5" opacity=".7"/>
+  <line x1="200" y1="115" x2="175" y2="130" stroke="#c9a84c" stroke-width="1.5" opacity=".7"/>
+  <line x1="200" y1="115" x2="225" y2="130" stroke="#c9a84c" stroke-width="1.5" opacity=".7"/>
+  <circle cx="200" cy="108" r="14" fill="#c9a84c" opacity=".15" stroke="#c9a84c" stroke-width=".8"/>
+  <text x="200" y="108" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="9" fill="#c9a84c" font-weight="600">LIVER</text>
+  <g opacity=".5" font-family="Arial" font-size="9" fill="#8fa3bc">
+    <rect x="60" y="45" width="80" height="18" rx="9" fill="#1a2f4a"/>
+    <text x="100" y="57" text-anchor="middle" fill="#c9a84c">Obesity</text>
+    <rect x="60" y="72" width="80" height="18" rx="9" fill="#1a2f4a"/>
+    <text x="100" y="84" text-anchor="middle">Diabetes</text>
+    <rect x="60" y="99" width="80" height="18" rx="9" fill="#1a2f4a"/>
+    <text x="100" y="111" text-anchor="middle">High fats</text>
+    <rect x="60" y="126" width="80" height="18" rx="9" fill="#1a2f4a"/>
+    <text x="100" y="138" text-anchor="middle">Genetics</text>
+  </g>
+  <line x1="140" y1="54" x2="172" y2="90" stroke="#c9a84c" stroke-width=".6" opacity=".3"/>
+  <line x1="140" y1="81" x2="172" y2="100" stroke="#c9a84c" stroke-width=".6" opacity=".3"/>
+  <line x1="140" y1="108" x2="172" y2="110" stroke="#c9a84c" stroke-width=".6" opacity=".3"/>
+  <line x1="140" y1="135" x2="172" y2="120" stroke="#c9a84c" stroke-width=".6" opacity=".3"/>
+  <text x="200" y="185" text-anchor="middle" font-family="Arial" font-size="9" fill="#6b8fa3" letter-spacing="2">RISK FACTORS</text>
+</svg>
             <span class="dc-topic">Fatty Liver</span>
           </div>
           <div class="dc-body">
             <h3 class="dc-question">Who is more likely to get fatty liver disease?</h3>
             <p class="dc-answer">People with obesity, type 2 diabetes, or high blood fats are most at risk. But fatty liver can also affect people who appear slim if they have metabolic problems.</p>
-            <button class="dc-more-btn" onclick="toggleDetail(this)" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:600;color:#fff;background:#002147;padding:6px 14px;border-radius:6px;border:none;cursor:pointer;flex-shrink:0;">Read more &#9662;</button>
-            <div class="dc-detail">
+            <button class="dc-more-btn" onclick="toggleDetail(this)" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:600;color:#fff;background:#002147;padding:6px 14px;border-radius:6px;border:none;cursor:pointer;flex-shrink:0;">Read more ▾</button>
+            <div class="dc-detail" style="display:none;">
               <ul style="padding-left:18px;margin:0;display:flex;flex-direction:column;gap:7px;">
                 <li style="font-size:12px;color:#374151;line-height:1.65;">Fatty liver disease — now called <strong>MASLD</strong> — affects about 1 in 3 adults worldwide, and its prevalence is rising with the global obesity epidemic.</li>
                 <li style="font-size:12px;color:#374151;line-height:1.65;">The strongest risk factors are <strong>obesity, type 2 diabetes, high triglycerides, high blood pressure, and insulin resistance</strong> — together known as metabolic syndrome.</li>
@@ -271,17 +302,19 @@
             </div>
           </div>
         </div>
-        <!-- CARD 2: ALT 100 interpretation -->
+        <!-- Add new cards here -->
+
+        <!-- CARD 9: ALT 100 interpretation -->
         <div class="dc-card dc-wide" data-topic="fatty-liver">
-          <div class="dc-img-wrap">
-            <img src="https://www.healthline.com/hlcmsresource/images/topic_centers/2019-8/liver-enzyme-test-1296x728-header.jpg" alt="Interpreting Liver Enzyme Tests ALT AST and ALP" class="dc-img">
+                              <div class="dc-img-wrap">
+            <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&auto=format&fit=crop&q=80" alt="Laboratory technician holding a blood tube" class="dc-img">
             <span class="dc-topic">Lab Tests</span>
           </div>
           <div class="dc-body">
             <h3 class="dc-question">I have fatty liver and my ALT is 100 U/L — what does this mean?</h3>
             <p class="dc-answer">An ALT of 100 U/L is about 2–3 times the upper limit of normal and signals active liver inflammation. It means your liver needs closer attention, but it does not automatically mean severe damage.</p>
             <button class="dc-more-btn" onclick="toggleDetail(this)" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:600;color:#fff;background:#002147;padding:6px 14px;border-radius:6px;border:none;cursor:pointer;flex-shrink:0;">Read more &#9662;</button>
-            <div class="dc-detail">
+            <div class="dc-detail" style="display:none;">
               <ul style="padding-left:18px;margin:0;display:flex;flex-direction:column;gap:7px;">
                 <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>ALT (alanine aminotransferase)</strong> is a liver enzyme that leaks into the blood when liver cells are inflamed or damaged. The normal upper limit is approximately 35–40 U/L for men and 25–35 U/L for women.</li>
                 <li style="font-size:12px;color:#374151;line-height:1.65;">An ALT of 100 U/L (2–3× upper limit of normal) in the setting of fatty liver most likely reflects <strong>active liver inflammation (MASH)</strong> — the more serious form of fatty liver disease — rather than simple fat accumulation.</li>
@@ -297,17 +330,34 @@
           </div>
         </div>
 
-        <!-- CARD 3: Liver biopsy indications -->
+        <!-- CARD 10: Liver biopsy indications -->
         <div class="dc-card dc-std" data-topic="fatty-liver">
-          <div class="dc-img-wrap">
-            <img src="https://www.niddk.nih.gov/-/media/Images/Health-Information/Digestive-Diseases/liver_biopsy_procedure_715x715.jpg" alt="Liver biopsy procedure NIDDK" class="dc-img">
+                    <div class="dc-img-wrap" style="background:#0a1628;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+  <rect width="400" height="200" fill="#0a1628"/>
+  <ellipse cx="290" cy="100" rx="100" ry="75" fill="#c9a84c" opacity=".06"/>
+  <ellipse cx="175" cy="105" rx="65" ry="45" fill="#8B0000" opacity=".35" stroke="#c9a84c" stroke-width="1" opacity=".5"/>
+  <text x="175" y="102" text-anchor="middle" font-family="Arial" font-size="9" fill="#c9a84c" opacity=".8">LIVER</text>
+  <line x1="310" y1="40" x2="200" y2="95" stroke="#8fa3bc" stroke-width="2.5" stroke-linecap="round"/>
+  <polygon points="200,90 197,102 203,102" fill="#8fa3bc"/>
+  <rect x="302" y="30" width="16" height="30" rx="3" fill="#4a6a8a" stroke="#8fa3bc" stroke-width="1"/>
+  <rect x="305" y="28" width="10" height="8" rx="2" fill="#2a4a6a"/>
+  <path d="M310,60 Q320,70 315,80" fill="none" stroke="#8fa3bc" stroke-width="1.5" stroke-linecap="round"/>
+  <g font-family="Arial" font-size="9" fill="#8fa3bc" opacity=".7">
+    <text x="270" y="110">Biopsy needle</text>
+    <line x1="308" y1="55" x2="268" y2="105" stroke="#8fa3bc" stroke-width=".5" stroke-dasharray="2,2"/>
+    <text x="270" y="135">Tissue sample</text>
+    <text x="270" y="150" fill="#c9a84c">→ Lab analysis</text>
+  </g>
+  <text x="200" y="185" text-anchor="middle" font-family="Arial" font-size="9" fill="#6b8fa3" letter-spacing="2">LIVER BIOPSY</text>
+</svg>
             <span class="dc-topic">Diagnosis</span>
           </div>
           <div class="dc-body">
             <h3 class="dc-question">When is a liver biopsy recommended for fatty liver disease?</h3>
             <p class="dc-answer">A liver biopsy is not needed for most people with fatty liver disease. It is recommended only when non-invasive tests give uncertain results or when the diagnosis of MASH and the degree of scarring need to be confirmed precisely.</p>
             <button class="dc-more-btn" onclick="toggleDetail(this)" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:600;color:#fff;background:#002147;padding:6px 14px;border-radius:6px;border:none;cursor:pointer;flex-shrink:0;">Read more &#9662;</button>
-            <div class="dc-detail">
+            <div class="dc-detail" style="display:none;">
               <ul style="padding-left:18px;margin:0;display:flex;flex-direction:column;gap:7px;">
                 <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Liver biopsy is the gold standard</strong> for diagnosing MASH and accurately staging fibrosis — but it is invasive, carries small risks (bleeding, pain, rare serious complications), and is not routinely needed.</li>
                 <li style="font-size:12px;color:#374151;line-height:1.65;">The <strong>2024 EASL–EASD–EASO guidelines</strong> state that in most cases, liver biopsy is not required for clinical management of MASLD — non-invasive tests (FIB-4, FibroScan, MR elastography) are used first.</li>
@@ -323,7 +373,7 @@
           </div>
         </div>
 
-        <!-- CARD 4: Imaging tests for fatty liver -->
+        <!-- CARD 8: Imaging tests for fatty liver -->
         <div class="dc-card dc-tall" data-topic="fatty-liver">
           <div class="dc-img-wrap" style="background:#0a1628;display:flex;align-items:center;justify-content:center;position:relative;">
             <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:200px;display:block;">
@@ -373,7 +423,7 @@
             <h3 class="dc-question">What is the role of ultrasound, MRI, or CT scan in diagnosing fatty liver?</h3>
             <p class="dc-answer">Imaging tests are the most important tools for detecting fatty liver disease without a biopsy. Ultrasound is the first-line test, while MRI is the most accurate for measuring liver fat.</p>
             <button class="dc-more-btn" onclick="toggleDetail(this)" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:600;color:#fff;background:#002147;padding:6px 14px;border-radius:6px;border:none;cursor:pointer;flex-shrink:0;">Read more &#9662;</button>
-            <div class="dc-detail">
+            <div class="dc-detail" style="display:none;">
               <ul style="padding-left:18px;margin:0;display:flex;flex-direction:column;gap:7px;">
                 <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Ultrasound</strong> is the recommended first-line test — it is widely available, inexpensive, and radiation-free. It detects moderate-to-severe liver fat reliably, but may miss mild steatosis (sensitivity 53–76% for mild fat).</li>
                 <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>FibroScan (transient elastography)</strong> is a specialised ultrasound that measures both liver stiffness (fibrosis) and fat content (CAP score) simultaneously — increasingly used in hepatology clinics as a non-invasive first-line tool.</li>
@@ -389,17 +439,54 @@
           </div>
         </div>
 
-        <!-- CARD 5: Types of fatty liver disease -->
+        <!-- CARD 7: Types of fatty liver disease -->
         <div class="dc-card dc-wide" data-topic="fatty-liver">
-          <div class="dc-img-wrap">
-            <img src="https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?w=600&auto=format&fit=crop&q=80" alt="Healthy liver vs cirrhosis comparison" class="dc-img">
+                    <div class="dc-img-wrap" style="background:#0a1628;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+  <rect width="400" height="200" fill="#0a1628"/>
+  <g font-family="Arial">
+    <rect x="30" y="70" width="65" height="65" rx="8" fill="#1a3a1a" stroke="#27ae60" stroke-width="1"/>
+    <text x="62" y="100" text-anchor="middle" font-size="8" fill="#27ae60">Healthy</text>
+    <text x="62" y="113" text-anchor="middle" font-size="8" fill="#27ae60">liver</text>
+    <path d="M38,103 Q62,88 86,103 Q62,118 38,103Z" fill="#27ae60" opacity=".3"/>
+
+    <text x="115" y="67" text-anchor="middle" font-size="7" fill="#8fa3bc">▶</text>
+
+    <rect x="100" y="70" width="65" height="65" rx="8" fill="#1a2e1a" stroke="#c9a84c" stroke-width="1"/>
+    <text x="132" y="100" text-anchor="middle" font-size="8" fill="#c9a84c">MASLD</text>
+    <text x="132" y="113" text-anchor="middle" font-size="8" fill="#c9a84c">(fat)</text>
+    <path d="M108,103 Q132,88 156,103 Q132,118 108,103Z" fill="#c9a84c" opacity=".3"/>
+
+    <text x="185" y="67" text-anchor="middle" font-size="7" fill="#8fa3bc">▶</text>
+
+    <rect x="170" y="70" width="65" height="65" rx="8" fill="#2a1a0a" stroke="#e67e22" stroke-width="1"/>
+    <text x="202" y="100" text-anchor="middle" font-size="8" fill="#e67e22">MASH</text>
+    <text x="202" y="113" text-anchor="middle" font-size="8" fill="#e67e22">(inflamed)</text>
+    <path d="M178,103 Q202,88 226,103 Q202,118 178,103Z" fill="#e67e22" opacity=".25"/>
+
+    <text x="255" y="67" text-anchor="middle" font-size="7" fill="#8fa3bc">▶</text>
+
+    <rect x="240" y="70" width="65" height="65" rx="8" fill="#2a0a0a" stroke="#e74c3c" stroke-width="1"/>
+    <text x="272" y="100" text-anchor="middle" font-size="8" fill="#e74c3c">Cirrhosis</text>
+    <text x="272" y="113" text-anchor="middle" font-size="8" fill="#e74c3c">(scarring)</text>
+    <path d="M248,103 Q272,88 296,103 Q272,118 248,103Z" fill="#e74c3c" opacity=".2"/>
+
+    <text x="325" y="67" text-anchor="middle" font-size="7" fill="#8fa3bc">▶</text>
+
+    <rect x="315" y="70" width="60" height="65" rx="8" fill="#1a0808" stroke="#8e44ad" stroke-width="1"/>
+    <text x="345" y="100" text-anchor="middle" font-size="8" fill="#8e44ad">HCC</text>
+    <text x="345" y="113" text-anchor="middle" font-size="8" fill="#8e44ad">(cancer)</text>
+  </g>
+  <text x="200" y="165" text-anchor="middle" font-family="Arial" font-size="8" fill="#8fa3bc">Early stages reversible — advanced stages are not</text>
+  <text x="200" y="185" text-anchor="middle" font-family="Arial" font-size="9" fill="#6b8fa3" letter-spacing="2">DISEASE SPECTRUM</text>
+</svg>
             <span class="dc-topic">Types of SLD</span>
           </div>
           <div class="dc-body">
             <h3 class="dc-question">Are there different types of fatty liver disease, and how do they differ?</h3>
             <p class="dc-answer">Yes — fatty liver disease is now grouped under a term called Steatotic Liver Disease (SLD), with several types based on the cause and severity. The most common type is MASLD, which is linked to metabolic risk factors like obesity and diabetes.</p>
             <button class="dc-more-btn" onclick="toggleDetail(this)" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:600;color:#fff;background:#002147;padding:6px 14px;border-radius:6px;border:none;cursor:pointer;flex-shrink:0;">Read more &#9662;</button>
-            <div class="dc-detail">
+            <div class="dc-detail" style="display:none;">
               <ul style="padding-left:18px;margin:0;display:flex;flex-direction:column;gap:7px;">
                 <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>MASLD</strong> (Metabolic dysfunction-associated steatotic liver disease) — the most common type, formerly called NAFLD. Caused by metabolic risk factors such as obesity, diabetes, and high blood fats. No or minimal alcohol use.</li>
                 <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>MASH</strong> (Metabolic dysfunction-associated steatohepatitis) — a more severe form of MASLD where fat in the liver causes inflammation and cell damage. Previously called NASH. Can progress to scarring and cirrhosis.</li>
@@ -417,15 +504,33 @@
 
         <!-- CARD 6: Early symptoms of fatty liver -->
         <div class="dc-card dc-wide" data-topic="fatty-liver">
-          <div class="dc-img-wrap">
-            <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&auto=format&fit=crop&q=80" alt="Person experiencing right upper quadrant abdominal pain" class="dc-img">
+                    <div class="dc-img-wrap" style="background:#0a1628;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+  <rect width="400" height="200" fill="#0a1628"/>
+  <ellipse cx="290" cy="100" rx="90" ry="70" fill="#c9a84c" opacity=".06"/>
+  <circle cx="185" cy="58" r="18" fill="none" stroke="#8fa3bc" stroke-width="1.5" opacity=".7"/>
+  <path d="M172,76 Q185,155 198,76" fill="none" stroke="#8fa3bc" stroke-width="1.5" opacity=".7"/>
+  <line x1="185" y1="76" x2="185" y2="125" stroke="#8fa3bc" stroke-width="1.5" opacity=".7"/>
+  <line x1="185" y1="100" x2="163" y2="118" stroke="#8fa3bc" stroke-width="1.5" opacity=".7"/>
+  <path d="M185,100 Q205,90 210,108" fill="none" stroke="#8fa3bc" stroke-width="1.5" opacity=".7"/>
+  <ellipse cx="205" cy="105" rx="14" ry="10" fill="#e74c3c" opacity=".25" stroke="#e74c3c" stroke-width="1"/>
+  <path d="M210,105 L255,80" stroke="#e74c3c" stroke-width=".8" opacity=".6" stroke-dasharray="3,2"/>
+  <text x="260" y="73" font-family="Arial" font-size="9" fill="#e74c3c">Right upper</text>
+  <text x="260" y="85" font-family="Arial" font-size="9" fill="#e74c3c">discomfort</text>
+  <g font-family="Arial" font-size="9" fill="#8fa3bc" opacity=".6">
+    <text x="260" y="110">Fatigue</text>
+    <text x="260" y="125">Bloating</text>
+    <text x="260" y="140" fill="#c9a84c">Often silent ⚠</text>
+  </g>
+  <text x="200" y="185" text-anchor="middle" font-family="Arial" font-size="9" fill="#6b8fa3" letter-spacing="2">SYMPTOMS</text>
+</svg>
             <span class="dc-topic">Symptoms</span>
           </div>
           <div class="dc-body">
             <h3 class="dc-question">What are the early signs of fatty liver disease I should know about?</h3>
             <p class="dc-answer">Fatty liver disease is usually silent — most people have no symptoms at all. When symptoms do appear, fatigue and mild discomfort in the upper right abdomen are the most common early signs.</p>
             <button class="dc-more-btn" onclick="toggleDetail(this)" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:600;color:#fff;background:#002147;padding:6px 14px;border-radius:6px;border:none;cursor:pointer;flex-shrink:0;">Read more &#9662;</button>
-            <div class="dc-detail">
+            <div class="dc-detail" style="display:none;">
               <ul style="padding-left:18px;margin:0;display:flex;flex-direction:column;gap:7px;">
                 <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Most people with MASLD have no symptoms</strong> — the disease is often discovered incidentally through abnormal liver blood tests or imaging done for another reason.</li>
                 <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Fatigue</strong> is the most commonly reported symptom, often described as persistent tiredness that does not improve with rest.</li>
@@ -441,17 +546,35 @@
           </div>
         </div>
 
-        <!-- CARD 7: Physical activity -->
+        <!-- CARD 4: Physical activity -->
         <div class="dc-card dc-std" data-topic="fatty-liver">
-          <div class="dc-img-wrap">
-            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&auto=format&fit=crop&q=80" alt="Person walking briskly for exercise" class="dc-img">
+                    <div class="dc-img-wrap" style="background:#0a1628;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+  <rect width="400" height="200" fill="#0a1a28"/>
+  <ellipse cx="280" cy="100" rx="100" ry="80" fill="#c9a84c" opacity=".06"/>
+  <circle cx="190" cy="60" r="16" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity=".8"/>
+  <path d="M190,76 L185,110 L170,135" fill="none" stroke="#c9a84c" stroke-width="2" stroke-linecap="round"/>
+  <path d="M190,76 L195,110 L215,130" fill="none" stroke="#c9a84c" stroke-width="2" stroke-linecap="round"/>
+  <path d="M185,95 L165,85" fill="none" stroke="#c9a84c" stroke-width="2" stroke-linecap="round"/>
+  <path d="M190,92 L210,88" fill="none" stroke="#c9a84c" stroke-width="2" stroke-linecap="round"/>
+  <path d="M80,150 L340,150" stroke="#2a4a6a" stroke-width="1" opacity=".5"/>
+  <g opacity=".45" font-family="Arial" font-size="10" fill="#8fa3bc">
+    <text x="270" y="70">150–240 min</text>
+    <text x="270" y="86">per week</text>
+    <line x1="265" y1="75" x2="215" y2="85" stroke="#c9a84c" stroke-width=".6" opacity=".5"/>
+    <text x="270" y="115">+ Resistance</text>
+    <text x="270" y="131">training</text>
+    <line x1="265" y1="120" x2="215" y2="118" stroke="#c9a84c" stroke-width=".6" opacity=".5"/>
+  </g>
+  <text x="200" y="185" text-anchor="middle" font-family="Arial" font-size="9" fill="#6b8fa3" letter-spacing="2">PHYSICAL ACTIVITY</text>
+</svg>
             <span class="dc-topic">Exercise</span>
           </div>
           <div class="dc-body">
             <h3 class="dc-question">What type and amount of exercise is recommended for fatty liver disease?</h3>
             <p class="dc-answer">At least 150 minutes of moderate exercise per week — such as brisk walking — is recommended. Adding resistance training gives extra benefit for the liver and muscles.</p>
             <button class="dc-more-btn" onclick="toggleDetail(this)" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:600;color:#fff;background:#002147;padding:6px 14px;border-radius:6px;border:none;cursor:pointer;flex-shrink:0;">Read more &#9662;</button>
-            <div class="dc-detail">
+            <div class="dc-detail" style="display:none;">
               <ul style="padding-left:18px;margin:0;display:flex;flex-direction:column;gap:7px;">
                 <li style="font-size:12px;color:#374151;line-height:1.65;">Aim for <strong>150–240 minutes of moderate aerobic exercise per week</strong> — brisk walking, cycling, swimming, or dancing.</li>
                 <li style="font-size:12px;color:#374151;line-height:1.65;">Add <strong>resistance training</strong> (weights or bodyweight) to protect muscle mass and further improve liver metabolism.</li>
@@ -467,17 +590,36 @@
           </div>
         </div>
 
-        <!-- CARD 8: Lean MASLD -->
+        <!-- CARD 5: Lean MASLD -->
         <div class="dc-card dc-wide" data-topic="fatty-liver">
-          <div class="dc-img-wrap">
-            <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&auto=format&fit=crop&q=80" alt="Lean body type man" class="dc-img">
+                    <div class="dc-img-wrap" style="background:#0a1628;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+  <rect width="400" height="200" fill="#0a1628"/>
+  <ellipse cx="280" cy="100" rx="100" ry="75" fill="#c9a84c" opacity=".06"/>
+  <circle cx="180" cy="55" r="20" fill="none" stroke="#8fa3bc" stroke-width="1.5" opacity=".7"/>
+  <path d="M165,75 Q180,165 195,75" fill="none" stroke="#8fa3bc" stroke-width="1.5" opacity=".7"/>
+  <line x1="180" y1="75" x2="180" y2="130" stroke="#8fa3bc" stroke-width="1.5" opacity=".7"/>
+  <line x1="180" y1="100" x2="158" y2="120" stroke="#8fa3bc" stroke-width="1.5" opacity=".7"/>
+  <line x1="180" y1="100" x2="202" y2="120" stroke="#8fa3bc" stroke-width="1.5" opacity=".7"/>
+  <ellipse cx="180" cy="105" rx="12" ry="9" fill="#c9a84c" opacity=".3" stroke="#c9a84c" stroke-width="1"/>
+  <text x="180" y="105" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-size="7" fill="#c9a84c">FAT</text>
+  <path d="M192,105 L240,80" stroke="#c9a84c" stroke-width=".8" opacity=".5" stroke-dasharray="3,2"/>
+  <text x="245" y="72" font-family="Arial" font-size="9" fill="#c9a84c">Visceral fat</text>
+  <text x="245" y="85" font-family="Arial" font-size="8" fill="#8fa3bc">(hidden)</text>
+  <g font-family="Arial" font-size="9" fill="#8fa3bc" opacity=".6">
+    <text x="245" y="110">Normal BMI</text>
+    <text x="245" y="125">Lean build</text>
+    <text x="245" y="140" fill="#c9a84c">Hidden risk ⚠</text>
+  </g>
+  <text x="200" y="185" text-anchor="middle" font-family="Arial" font-size="9" fill="#6b8fa3" letter-spacing="2">LEAN MASLD</text>
+</svg>
             <span class="dc-topic">Lean MASLD</span>
           </div>
           <div class="dc-body">
             <h3 class="dc-question">I have a lean build — how did I develop fatty liver disease?</h3>
             <p class="dc-answer">Fatty liver disease can develop in slim people too, affecting up to 20% of all MASLD patients with a normal body weight. Hidden fat around the organs, genetics, and diet all play a role.</p>
             <button class="dc-more-btn" onclick="toggleDetail(this)" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:600;color:#fff;background:#002147;padding:6px 14px;border-radius:6px;border:none;cursor:pointer;flex-shrink:0;">Read more &#9662;</button>
-            <div class="dc-detail">
+            <div class="dc-detail" style="display:none;">
               <ul style="padding-left:18px;margin:0;display:flex;flex-direction:column;gap:7px;">
                 <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>20% of MASLD patients have a normal BMI</strong> — being slim does not protect against fatty liver disease.</li>
                 <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Visceral fat</strong> (hidden fat around internal organs) is the key driver — it is not visible from the outside.</li>
@@ -495,17 +637,40 @@
 
         </div>
 
-        <!-- CARD 9: Diet for fatty liver -->
+        <!-- CARD 2: Diet for fatty liver -->
         <div class="dc-card dc-std" data-topic="fatty-liver">
-          <div class="dc-img-wrap">
-            <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&auto=format&fit=crop&q=80" alt="Colorful Mediterranean vegetables and olive oil" class="dc-img">
-            <span class="dc-topic">Fatty Liver</span>
+                    <div class="dc-img-wrap" style="background:#0d1f0e;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+            <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+  <rect width="400" height="200" fill="#0d1f0e"/>
+  <ellipse cx="270" cy="100" rx="130" ry="95" fill="#c9a84c" opacity=".06"/>
+  <circle cx="230" cy="100" r="72" fill="none" stroke="#3a7d44" stroke-width="1.2" opacity=".6"/>
+  <circle cx="230" cy="100" r="58" fill="#0d2b0f" stroke="#3a7d44" stroke-width=".5" opacity=".4"/>
+  <ellipse cx="215" cy="90" rx="20" ry="14" fill="#e74c3c" opacity=".7"/>
+  <ellipse cx="245" cy="85" rx="16" ry="11" fill="#f39c12" opacity=".7"/>
+  <ellipse cx="220" cy="112" rx="18" ry="12" fill="#27ae60" opacity=".7"/>
+  <ellipse cx="248" cy="108" rx="14" ry="10" fill="#8e44ad" opacity=".6"/>
+  <circle cx="235" cy="98" rx="10" fill="#f1c40f" opacity=".6"/>
+  <text x="230" y="180" text-anchor="middle" font-family="Arial" font-size="9" fill="#6b8f6b" letter-spacing="2">MEDITERRANEAN DIET</text>
+  <g opacity=".5" font-family="Arial" font-size="9" fill="#8fa3bc">
+    <rect x="48" y="45" width="90" height="16" rx="8" fill="#0d2b0f"/>
+    <text x="93" y="57" text-anchor="middle" fill="#27ae60">Vegetables ✓</text>
+    <rect x="48" y="68" width="90" height="16" rx="8" fill="#0d2b0f"/>
+    <text x="93" y="80" text-anchor="middle" fill="#27ae60">Fish ✓</text>
+    <rect x="48" y="91" width="90" height="16" rx="8" fill="#0d2b0f"/>
+    <text x="93" y="103" text-anchor="middle" fill="#27ae60">Olive oil ✓</text>
+    <rect x="48" y="114" width="90" height="16" rx="8" fill="#1a0808"/>
+    <text x="93" y="126" text-anchor="middle" fill="#e74c3c">Fried food ✗</text>
+    <rect x="48" y="137" width="90" height="16" rx="8" fill="#1a0808"/>
+    <text x="93" y="149" text-anchor="middle" fill="#e74c3c">Sugary drinks ✗</text>
+  </g>
+</svg>
+            <span class="dc-topic">Diet</span>
           </div>
           <div class="dc-body">
             <h3 class="dc-question">What type of diet can help better manage fatty liver disease?</h3>
             <p class="dc-answer">The Mediterranean diet is the most effective and recommended diet for fatty liver disease. It reduces liver fat, lowers inflammation, and can even help reverse early liver damage.</p>
             <button class="dc-more-btn" onclick="toggleDetail(this)" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:600;color:#fff;background:#002147;padding:6px 14px;border-radius:6px;border:none;cursor:pointer;flex-shrink:0;">Read more &#9662;</button>
-            <div class="dc-detail">
+            <div class="dc-detail" style="display:none;">
               <ul style="padding-left:18px;margin:0;display:flex;flex-direction:column;gap:7px;">
                 <li style="font-size:12px;color:#374151;line-height:1.65;">The <strong>Mediterranean diet</strong> is the top recommended diet — it reduced liver fat by <strong>39% in 12 weeks</strong> in clinical trials.</li>
                 <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Eat more:</strong> olive oil, vegetables, fruits, whole grains, fish, legumes, nuts, and unsweetened coffee or green tea.</li>
@@ -521,36 +686,704 @@
           </div>
         </div>
 
-        <!-- ═══ ADD NEW CARDS ABOVE THIS LINE ═══ -->
-
       </div><!-- end discover-grid --></div><!-- end section-fatty-liver -->
 </div>
 
   <!-- LIVER CANCER PAGE -->
   <div id="topic-liver-cancer" style="display:none;">
     <div class="section-label">Liver Cancer</div>
-    <div class="coming-soon-box">
-      <p class="coming-soon-title">Coming soon</p>
-      <p class="coming-soon-sub">Questions and answers about liver cancer will be added here shortly.</p>
-    </div>
+    <div class="discover-grid">
+
+      <!-- LC CARD 1: What is HCC — tall hero -->
+      <div class="dc-card dc-tall" data-topic="liver-cancer">
+        <div class="dc-img-wrap" style="background:#0a0e1a;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+          <svg viewBox="0 0 400 340" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+            <rect width="400" height="340" fill="#0a0e1a"/>
+            <ellipse cx="300" cy="170" rx="130" ry="110" fill="#8e44ad" opacity=".05"/>
+            <!-- liver silhouette -->
+            <path d="M120,120 Q160,80 220,90 Q280,100 300,140 Q320,180 300,210 Q280,240 240,245 Q200,250 170,230 Q130,210 115,175 Q100,140 120,120Z" fill="#4a0e1a" opacity=".7" stroke="#8e44ad" stroke-width="1"/>
+            <!-- tumour mass -->
+            <circle cx="235" cy="160" r="38" fill="#8e44ad" opacity=".35" stroke="#8e44ad" stroke-width="1.5"/>
+            <circle cx="235" cy="160" r="22" fill="#8e44ad" opacity=".5"/>
+            <circle cx="235" cy="160" r="10" fill="#c9a84c" opacity=".8"/>
+            <!-- blood vessels feeding tumour -->
+            <path d="M170,185 Q200,170 223,160" fill="none" stroke="#e74c3c" stroke-width="1.2" opacity=".6" stroke-dasharray="4,2"/>
+            <path d="M200,130 Q218,145 225,158" fill="none" stroke="#e74c3c" stroke-width="1.2" opacity=".6" stroke-dasharray="4,2"/>
+            <!-- labels -->
+            <text x="235" y="215" text-anchor="middle" font-family="Arial" font-size="8" fill="#8e44ad" opacity=".8">Tumour</text>
+            <line x1="235" y1="200" x2="235" y2="210" stroke="#8e44ad" stroke-width=".8" opacity=".6"/>
+            <text x="155" y="198" font-family="Arial" font-size="8" fill="#e74c3c" opacity=".7">Feeding</text>
+            <text x="155" y="209" font-family="Arial" font-size="8" fill="#e74c3c" opacity=".7">vessels</text>
+            <text x="200" y="315" text-anchor="middle" font-family="Arial" font-size="9" fill="#6b7a9a" letter-spacing="2">HEPATOCELLULAR CARCINOMA</text>
+          </svg>
+          <span class="dc-topic">Liver Cancer</span>
+        </div>
+        <div class="dc-body">
+          <h3 class="dc-question">What is hepatocellular carcinoma (HCC) and who is at risk?</h3>
+          <p class="dc-answer">Hepatocellular carcinoma (HCC) is the most common type of primary liver cancer. It usually arises in a liver that is already damaged by cirrhosis, chronic hepatitis, or advanced fatty liver disease.</p>
+          <button class="dc-more-btn" onclick="toggleDetail(this)" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:600;color:#fff;background:#002147;padding:6px 14px;border-radius:6px;border:none;cursor:pointer;flex-shrink:0;">Read more &#9662;</button>
+          <div class="dc-detail" style="display:none;">
+            <ul style="padding-left:18px;margin:0;display:flex;flex-direction:column;gap:7px;">
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>HCC is the 6th most common cancer worldwide</strong> and the 3rd leading cause of cancer-related death globally, with incidence rising in the United States due to the obesity epidemic.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">The strongest risk factor is <strong>cirrhosis</strong> from any cause — including hepatitis B, hepatitis C, alcohol-related liver disease, and MASLD/MASH. About 80–90% of HCC cases arise in cirrhotic livers.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>MASLD is now a leading cause of HCC</strong> in the US and Europe, and HCC can occasionally develop in MASLD patients even without cirrhosis — making broad surveillance important.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">Other risk factors include <strong>diabetes, obesity, heavy alcohol use, aflatoxin exposure</strong> (a mold toxin in certain foods), and a family history of liver cancer.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Men are 2–3 times more likely</strong> than women to develop HCC. Asian and African Americans have higher rates due to higher rates of viral hepatitis.</li>
+            </ul>
+            <div style="margin-top:10px;display:flex;align-items:center;gap:6px;">
+              <span title="AASLD HCC Guidance 2023 · EASL Clinical Practice Guidelines HCC 2022 · Rumgay H et al., JHEP Reports 2022 · Singal AG et al., CA Cancer J Clin 2023 · AASLD Practice Guidance MASLD 2023" style="cursor:help;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#002147;color:#c9a84c;font-size:11px;font-weight:700;flex-shrink:0;">i</span>
+              <span style="font-size:11px;color:#9ca3af;">Hover the icon to see sources</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LC CARD 2: Surveillance — wide -->
+      <div class="dc-card dc-wide" data-topic="liver-cancer">
+        <div class="dc-img-wrap" style="background:#091520;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+          <svg viewBox="0 0 400 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+            <rect width="400" height="180" fill="#091520"/>
+            <ellipse cx="330" cy="90" rx="110" ry="80" fill="#c9a84c" opacity=".05"/>
+            <!-- calendar grid -->
+            <rect x="30" y="30" width="160" height="130" rx="6" fill="#0d2137" stroke="#1e4060" stroke-width="1"/>
+            <rect x="30" y="30" width="160" height="22" rx="6" fill="#002147"/>
+            <text x="110" y="45" text-anchor="middle" font-family="Arial" font-size="9" fill="#c9a84c" font-weight="600">EVERY 6 MONTHS</text>
+            <!-- grid cells -->
+            <g font-family="Arial" font-size="8" fill="#8fa3bc" opacity=".7">
+              <text x="42" y="68">Jan</text><text x="72" y="68">Feb</text><text x="102" y="68">Mar</text><text x="132" y="68">Apr</text><text x="162" y="68">May</text>
+              <text x="42" y="88">Jun</text><text x="72" y="88">Jul</text><text x="102" y="88">Aug</text><text x="132" y="88">Sep</text><text x="162" y="88">Oct</text>
+            </g>
+            <!-- highlight 6-month intervals -->
+            <rect x="36" y="56" width="28" height="18" rx="3" fill="#c9a84c" opacity=".25" stroke="#c9a84c" stroke-width=".8"/>
+            <rect x="96" y="76" width="28" height="18" rx="3" fill="#c9a84c" opacity=".25" stroke="#c9a84c" stroke-width=".8"/>
+            <!-- arrow linking the two -->
+            <path d="M64,65 Q110,55 96,85" fill="none" stroke="#c9a84c" stroke-width=".8" opacity=".5" stroke-dasharray="3,2"/>
+            <!-- ultrasound + AFP icons -->
+            <g transform="translate(210,30)">
+              <rect x="0" y="0" width="80" height="35" rx="6" fill="#0d2137" stroke="#1e4060" stroke-width="1"/>
+              <text x="40" y="15" text-anchor="middle" font-family="Arial" font-size="8" fill="#4a9eff">Ultrasound</text>
+              <text x="40" y="27" text-anchor="middle" font-family="Arial" font-size="7" fill="#8fa3bc">every 6 mo</text>
+            </g>
+            <g transform="translate(210,75)">
+              <rect x="0" y="0" width="80" height="35" rx="6" fill="#0d2137" stroke="#1e4060" stroke-width="1"/>
+              <text x="40" y="15" text-anchor="middle" font-family="Arial" font-size="8" fill="#c9a84c">AFP Blood Test</text>
+              <text x="40" y="27" text-anchor="middle" font-family="Arial" font-size="7" fill="#8fa3bc">optional add-on</text>
+            </g>
+            <g transform="translate(210,120)">
+              <rect x="0" y="0" width="80" height="35" rx="6" fill="#0d2137" stroke="#1e4060" stroke-width="1"/>
+              <text x="40" y="15" text-anchor="middle" font-family="Arial" font-size="8" fill="#27ae60">MRI / CT</text>
+              <text x="40" y="27" text-anchor="middle" font-family="Arial" font-size="7" fill="#8fa3bc">if nodule found</text>
+            </g>
+            <text x="200" y="170" text-anchor="middle" font-family="Arial" font-size="9" fill="#6b7a9a" letter-spacing="2">HCC SURVEILLANCE</text>
+          </svg>
+          <span class="dc-topic">Surveillance</span>
+        </div>
+        <div class="dc-body">
+          <h3 class="dc-question">Who should be screened for liver cancer, and how often?</h3>
+          <p class="dc-answer">People with cirrhosis from any cause should have an ultrasound every 6 months to detect liver cancer early, when it is most treatable. Some high-risk patients also get an AFP blood test alongside the ultrasound.</p>
+          <button class="dc-more-btn" onclick="toggleDetail(this)" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:600;color:#fff;background:#002147;padding:6px 14px;border-radius:6px;border:none;cursor:pointer;flex-shrink:0;">Read more &#9662;</button>
+          <div class="dc-detail" style="display:none;">
+            <ul style="padding-left:18px;margin:0;display:flex;flex-direction:column;gap:7px;">
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Liver ultrasound every 6 months</strong> is the standard surveillance recommendation for all patients with cirrhosis, regardless of cause.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>AFP (alpha-fetoprotein)</strong> is a blood tumour marker that may be added to ultrasound in high-risk patients. The 2023 AASLD guidance supports combined ultrasound + AFP surveillance over ultrasound alone.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">In patients with obesity or poor ultrasound quality, <strong>CT or MRI surveillance</strong> may be considered instead of ultrasound.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Hepatitis B patients without cirrhosis</strong> may also qualify for surveillance if they are over 40 (Asian men), over 50 (Asian women), or have a family history of HCC.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">Early-stage HCC detected by surveillance has <strong>5-year survival rates exceeding 70%</strong> with curative treatments, compared to &lt;15% for symptomatic, late-stage detection.</li>
+            </ul>
+            <div style="margin-top:10px;display:flex;align-items:center;gap:6px;">
+              <span title="AASLD HCC Practice Guidance 2023 · Singal AG et al., J Hepatol 2023 · EASL HCC Clinical Guidelines 2022 · AASLD Guidance on MASLD 2023" style="cursor:help;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#002147;color:#c9a84c;font-size:11px;font-weight:700;flex-shrink:0;">i</span>
+              <span style="font-size:11px;color:#9ca3af;">Hover the icon to see sources</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LC CARD 3: Stages and treatment — std -->
+      <div class="dc-card dc-std" data-topic="liver-cancer">
+        <div class="dc-img-wrap" style="background:#0a0e1a;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+          <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+            <rect width="400" height="200" fill="#0a0e1a"/>
+            <ellipse cx="280" cy="100" rx="130" ry="90" fill="#8e44ad" opacity=".05"/>
+            <!-- BCLC stage ladder -->
+            <g font-family="Arial">
+              <rect x="30" y="25" width="75" height="30" rx="5" fill="#0d3320" stroke="#27ae60" stroke-width="1"/>
+              <text x="67" y="38" text-anchor="middle" font-size="8" fill="#27ae60">BCLC 0/A</text>
+              <text x="67" y="50" text-anchor="middle" font-size="7" fill="#8fa3bc">Very early/Early</text>
+
+              <rect x="30" y="68" width="75" height="30" rx="5" fill="#1a2800" stroke="#c9a84c" stroke-width="1"/>
+              <text x="67" y="81" text-anchor="middle" font-size="8" fill="#c9a84c">BCLC B</text>
+              <text x="67" y="93" text-anchor="middle" font-size="7" fill="#8fa3bc">Intermediate</text>
+
+              <rect x="30" y="111" width="75" height="30" rx="5" fill="#2a1000" stroke="#e67e22" stroke-width="1"/>
+              <text x="67" y="124" text-anchor="middle" font-size="8" fill="#e67e22">BCLC C</text>
+              <text x="67" y="136" text-anchor="middle" font-size="7" fill="#8fa3bc">Advanced</text>
+
+              <rect x="30" y="154" width="75" height="30" rx="5" fill="#1a0808" stroke="#e74c3c" stroke-width="1"/>
+              <text x="67" y="167" text-anchor="middle" font-size="8" fill="#e74c3c">BCLC D</text>
+              <text x="67" y="179" text-anchor="middle" font-size="7" fill="#8fa3bc">Terminal</text>
+            </g>
+            <!-- treatments -->
+            <g font-family="Arial" font-size="8" fill="#8fa3bc">
+              <text x="125" y="44" fill="#27ae60">Resection / Transplant / Ablation</text>
+              <text x="125" y="87" fill="#c9a84c">TACE / TARE</text>
+              <text x="125" y="130" fill="#e67e22">Sorafenib / Immunotherapy</text>
+              <text x="125" y="173" fill="#e74c3c">Best supportive care</text>
+            </g>
+            <line x1="106" y1="40" x2="123" y2="40" stroke="#27ae60" stroke-width=".6" opacity=".5"/>
+            <line x1="106" y1="83" x2="123" y2="83" stroke="#c9a84c" stroke-width=".6" opacity=".5"/>
+            <line x1="106" y1="126" x2="123" y2="126" stroke="#e67e22" stroke-width=".6" opacity=".5"/>
+            <line x1="106" y1="169" x2="123" y2="169" stroke="#e74c3c" stroke-width=".6" opacity=".5"/>
+          </svg>
+          <span class="dc-topic">Staging</span>
+        </div>
+        <div class="dc-body">
+          <h3 class="dc-question">How is liver cancer staged and what are the treatment options?</h3>
+          <p class="dc-answer">Liver cancer is staged using the BCLC system, which guides treatment decisions based on tumour size, liver function, and overall health. Early-stage cancer can be cured; advanced stages are managed but not cured.</p>
+          <button class="dc-more-btn" onclick="toggleDetail(this)" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:600;color:#fff;background:#002147;padding:6px 14px;border-radius:6px;border:none;cursor:pointer;flex-shrink:0;">Read more &#9662;</button>
+          <div class="dc-detail" style="display:none;">
+            <ul style="padding-left:18px;margin:0;display:flex;flex-direction:column;gap:7px;">
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>BCLC 0 / A (very early / early):</strong> Small tumours ≤5 cm, good liver function. Curative options — surgical resection, liver transplantation, or thermal ablation (radiofrequency or microwave).</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>BCLC B (intermediate):</strong> Multiple tumours, no vascular invasion. TACE (transarterial chemoembolization) or TARE (radioembolization with Y-90) blocks blood supply to tumours.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>BCLC C (advanced):</strong> Vascular invasion or spread to other organs. Systemic therapy — immunotherapy combinations (atezolizumab + bevacizumab) are now the preferred first-line treatment per 2022 EASL guidelines.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Liver transplantation</strong> offers the best long-term cure for patients meeting Milan criteria (1 tumour ≤5 cm or 3 tumours ≤3 cm each), removing both the cancer and the diseased liver.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">Treatment decisions are made by a <strong>multidisciplinary team</strong> including hepatology, oncology, radiology, and surgery — always ask about clinical trials at an academic centre.</li>
+            </ul>
+            <div style="margin-top:10px;display:flex;align-items:center;gap:6px;">
+              <span title="EASL Clinical Practice Guidelines HCC 2022 · AASLD HCC Practice Guidance 2023 · Llovet JM et al., Nature Reviews 2021 · Finn RS et al., NEJM 2020 (IMbrave150)" style="cursor:help;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#002147;color:#c9a84c;font-size:11px;font-weight:700;flex-shrink:0;">i</span>
+              <span style="font-size:11px;color:#9ca3af;">Hover the icon to see sources</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LC CARD 4: Symptoms of HCC — std -->
+      <div class="dc-card dc-std" data-topic="liver-cancer">
+        <div class="dc-img-wrap" style="background:#0a0e1a;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+          <img src="https://images.unsplash.com/photo-1530497610245-94d3c16cda28?w=600&auto=format&fit=crop&q=80" alt="Patient discussing symptoms with clinician" class="dc-img">
+          <span class="dc-topic">Symptoms</span>
+        </div>
+        <div class="dc-body">
+          <h3 class="dc-question">What symptoms does liver cancer cause?</h3>
+          <p class="dc-answer">Early liver cancer almost never causes symptoms — which is why regular surveillance is essential. By the time symptoms appear, the cancer is often at an advanced stage.</p>
+          <button class="dc-more-btn" onclick="toggleDetail(this)" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:600;color:#fff;background:#002147;padding:6px 14px;border-radius:6px;border:none;cursor:pointer;flex-shrink:0;">Read more &#9662;</button>
+          <div class="dc-detail" style="display:none;">
+            <ul style="padding-left:18px;margin:0;display:flex;flex-direction:column;gap:7px;">
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Most early HCC causes no symptoms</strong> — the cancer is found on routine surveillance imaging in patients with cirrhosis or chronic hepatitis.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">When symptoms appear, the most common are <strong>unexplained weight loss, loss of appetite, and persistent fatigue</strong>.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Upper right abdominal pain or a palpable mass</strong> may occur as the tumour grows and presses on nearby structures.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Jaundice</strong> (yellowing of the skin and eyes), <strong>abdominal swelling</strong> from fluid (ascites), and <strong>easy bruising</strong> may signal that liver function is worsening.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">If you have cirrhosis or chronic hepatitis and develop any of these symptoms, <strong>contact your doctor promptly</strong> — do not wait for your next scheduled visit.</li>
+            </ul>
+            <div style="margin-top:10px;display:flex;align-items:center;gap:6px;">
+              <span title="EASL HCC Guidelines 2022 · AASLD HCC Guidance 2023 · Singal AG et al., CA Cancer J Clin 2023" style="cursor:help;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#002147;color:#c9a84c;font-size:11px;font-weight:700;flex-shrink:0;">i</span>
+              <span style="font-size:11px;color:#9ca3af;">Hover the icon to see sources</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LC CARD 5: MASLD → HCC link — wide -->
+      <div class="dc-card dc-wide" data-topic="liver-cancer">
+        <div class="dc-img-wrap" style="background:#0a1628;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+          <svg viewBox="0 0 400 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+            <rect width="400" height="180" fill="#0a1628"/>
+            <ellipse cx="320" cy="90" rx="110" ry="80" fill="#c9a84c" opacity=".05"/>
+            <!-- progression arrow road -->
+            <path d="M30,120 Q200,60 370,110" fill="none" stroke="#1e3a5a" stroke-width="18" stroke-linecap="round"/>
+            <path d="M30,120 Q200,60 370,110" fill="none" stroke="#0a1628" stroke-width="14" stroke-linecap="round"/>
+            <!-- milestones -->
+            <circle cx="55" cy="115" r="16" fill="#0d2137" stroke="#27ae60" stroke-width="1.5"/>
+            <text x="55" y="112" text-anchor="middle" font-family="Arial" font-size="7" fill="#27ae60">Normal</text>
+            <text x="55" y="123" text-anchor="middle" font-family="Arial" font-size="7" fill="#27ae60">liver</text>
+
+            <circle cx="140" cy="88" r="16" fill="#0d2137" stroke="#c9a84c" stroke-width="1.5"/>
+            <text x="140" y="85" text-anchor="middle" font-family="Arial" font-size="7" fill="#c9a84c">MASLD</text>
+            <text x="140" y="96" text-anchor="middle" font-family="Arial" font-size="7" fill="#c9a84c">(fat)</text>
+
+            <circle cx="220" cy="72" r="16" fill="#0d2137" stroke="#e67e22" stroke-width="1.5"/>
+            <text x="220" y="69" text-anchor="middle" font-family="Arial" font-size="7" fill="#e67e22">MASH</text>
+            <text x="220" y="80" text-anchor="middle" font-family="Arial" font-size="7" fill="#e67e22">(inflamed)</text>
+
+            <circle cx="300" cy="80" r="16" fill="#0d2137" stroke="#e74c3c" stroke-width="1.5"/>
+            <text x="300" y="77" text-anchor="middle" font-family="Arial" font-size="7" fill="#e74c3c">Fibrosis /</text>
+            <text x="300" y="88" text-anchor="middle" font-family="Arial" font-size="7" fill="#e74c3c">Cirrhosis</text>
+
+            <circle cx="370" cy="100" r="18" fill="#1a0820" stroke="#8e44ad" stroke-width="2"/>
+            <text x="370" y="97" text-anchor="middle" font-family="Arial" font-size="8" fill="#8e44ad" font-weight="600">HCC</text>
+            <text x="370" y="109" text-anchor="middle" font-family="Arial" font-size="7" fill="#8e44ad">cancer</text>
+
+            <text x="200" y="168" text-anchor="middle" font-family="Arial" font-size="9" fill="#6b7a9a" letter-spacing="2">MASLD → HCC PATHWAY</text>
+          </svg>
+          <span class="dc-topic">MASLD &amp; Cancer</span>
+        </div>
+        <div class="dc-body">
+          <h3 class="dc-question">Can fatty liver disease cause liver cancer even without cirrhosis?</h3>
+          <p class="dc-answer">Yes — MASLD is now one of the fastest-growing causes of liver cancer, and HCC can occasionally develop even in people with fatty liver who have not yet developed cirrhosis. This makes regular monitoring important for all high-risk patients.</p>
+          <button class="dc-more-btn" onclick="toggleDetail(this)" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:600;color:#fff;background:#002147;padding:6px 14px;border-radius:6px;border:none;cursor:pointer;flex-shrink:0;">Read more &#9662;</button>
+          <div class="dc-detail" style="display:none;">
+            <ul style="padding-left:18px;margin:0;display:flex;flex-direction:column;gap:7px;">
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>MASLD-related HCC is rising rapidly</strong> — it is now the fastest-growing indication for liver transplantation and liver cancer in the United States.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">While most MASLD-related HCC occurs in patients with advanced fibrosis or cirrhosis, approximately <strong>20–30% of cases arise in non-cirrhotic MASLD</strong> — unlike HCC from viral hepatitis where cirrhosis is nearly universal.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">Risk factors for MASLD-HCC without cirrhosis include <strong>obesity, type 2 diabetes, male sex, older age, and specific genetic variants</strong> (PNPLA3 and TM6SF2).</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">The 2023 AASLD guidance acknowledges uncertainty around surveillance in <strong>non-cirrhotic MASLD with advanced fibrosis (F3)</strong> and recommends individualised risk assessment.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>The best protection</strong> is to treat fatty liver disease early through weight loss, diet, and management of metabolic conditions — and never miss a surveillance appointment if you have cirrhosis.</li>
+            </ul>
+            <div style="margin-top:10px;display:flex;align-items:center;gap:6px;">
+              <span title="Kanwal F et al., Hepatology 2022 · AASLD HCC Guidance 2023 · Huang DQ et al., Nat Rev Gastroenterol Hepatol 2023 · Villanueva A, NEJM 2019" style="cursor:help;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#002147;color:#c9a84c;font-size:11px;font-weight:700;flex-shrink:0;">i</span>
+              <span style="font-size:11px;color:#9ca3af;">Hover the icon to see sources</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end liver-cancer grid -->
   </div>
 
   <!-- HEPATITIS PAGE -->
   <div id="topic-hepatitis" style="display:none;">
     <div class="section-label">Hepatitis</div>
-    <div class="coming-soon-box">
-      <p class="coming-soon-title">Coming soon</p>
-      <p class="coming-soon-sub">Questions and answers about hepatitis will be added here shortly.</p>
-    </div>
+    <div class="discover-grid">
+
+      <!-- HEP CARD 1: Hep B vs Hep C — tall -->
+      <div class="dc-card dc-tall" data-topic="hepatitis">
+        <div class="dc-img-wrap" style="background:#0a1a10;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+          <svg viewBox="0 0 400 340" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+            <rect width="400" height="340" fill="#0a1a10"/>
+            <ellipse cx="310" cy="170" rx="120" ry="110" fill="#27ae60" opacity=".05"/>
+            <!-- Hep B virus (icosahedral) -->
+            <polygon points="130,60 165,75 175,110 150,135 115,135 90,110 100,75" fill="#0d3320" stroke="#27ae60" stroke-width="1.5" opacity=".9"/>
+            <polygon points="130,60 165,75 175,110 150,135 115,135 90,110 100,75" fill="none" stroke="#27ae60" stroke-width=".5" opacity=".4" transform="scale(0.7) translate(57,52)"/>
+            <text x="132" y="155" text-anchor="middle" font-family="Arial" font-size="9" fill="#27ae60" font-weight="600">Hepatitis B</text>
+            <text x="132" y="167" text-anchor="middle" font-family="Arial" font-size="8" fill="#8fa3bc">DNA virus</text>
+            <!-- HBV spikes -->
+            <g stroke="#27ae60" stroke-width=".8" opacity=".6">
+              <line x1="130" y1="60" x2="130" y2="48"/><line x1="165" y1="75" x2="175" y2="66"/>
+              <line x1="175" y1="110" x2="188" y2="110"/><line x1="90" y1="110" x2="77" y2="110"/>
+              <line x1="100" y1="75" x2="88" y2="65"/>
+            </g>
+
+            <!-- Hep C virus (enveloped sphere) -->
+            <circle cx="268" cy="97" r="40" fill="#0d1a3a" stroke="#3498db" stroke-width="1.5" opacity=".9"/>
+            <circle cx="268" cy="97" r="28" fill="#0d1a3a" stroke="#3498db" stroke-width=".5" opacity=".4"/>
+            <g stroke="#3498db" stroke-width="1" opacity=".7">
+              <line x1="268" y1="57" x2="268" y2="47"/><line x1="305" y1="72" x2="313" y2="64"/>
+              <line x1="308" y1="97" x2="320" y2="97"/><line x1="228" y1="97" x2="216" y2="97"/>
+              <line x1="231" y1="72" x2="223" y2="64"/><line x1="268" y1="137" x2="268" y2="147"/>
+              <line x1="231" y1="122" x2="223" y2="130"/><line x1="305" y1="122" x2="313" y2="130"/>
+            </g>
+            <text x="268" y="157" text-anchor="middle" font-family="Arial" font-size="9" fill="#3498db" font-weight="600">Hepatitis C</text>
+            <text x="268" y="169" text-anchor="middle" font-family="Arial" font-size="8" fill="#8fa3bc">RNA virus</text>
+
+            <!-- comparison table -->
+            <rect x="30" y="195" width="340" height="105" rx="8" fill="#0d2137" stroke="#1e4060" stroke-width="1"/>
+            <g font-family="Arial" font-size="8" fill="#8fa3bc">
+              <text x="45" y="215" fill="#c9a84c" font-weight="600">Feature</text>
+              <text x="160" y="215" fill="#27ae60" font-weight="600">Hep B</text>
+              <text x="280" y="215" fill="#3498db" font-weight="600">Hep C</text>
+              <line x1="35" y1="220" x2="365" y2="220" stroke="#1e4060" stroke-width=".5"/>
+              <text x="45" y="235">Transmission</text>
+              <text x="160" y="235">Blood, sex, birth</text>
+              <text x="280" y="235">Blood (mainly)</text>
+              <text x="45" y="252">Vaccine?</text>
+              <text x="160" y="252" fill="#27ae60">Yes ✓</text>
+              <text x="280" y="252" fill="#e74c3c">No ✗</text>
+              <text x="45" y="269">Curable?</text>
+              <text x="160" y="269" fill="#c9a84c">Controlled</text>
+              <text x="280" y="269" fill="#27ae60">Yes — 8–12 wks</text>
+              <text x="45" y="286">Treatment</text>
+              <text x="160" y="286">Antivirals (lifelong)</text>
+              <text x="280" y="286">DAAs (short course)</text>
+            </g>
+            <text x="200" y="315" text-anchor="middle" font-family="Arial" font-size="9" fill="#6b7a9a" letter-spacing="2">VIRAL HEPATITIS</text>
+          </svg>
+          <span class="dc-topic">Hepatitis B &amp; C</span>
+        </div>
+        <div class="dc-body">
+          <h3 class="dc-question">What is the difference between hepatitis B and hepatitis C?</h3>
+          <p class="dc-answer">Both are viral infections that inflame the liver, but they differ in how they spread, whether there is a vaccine, and how they are treated. Hepatitis C can now be completely cured in most people within 8–12 weeks.</p>
+          <button class="dc-more-btn" onclick="toggleDetail(this)" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:600;color:#fff;background:#002147;padding:6px 14px;border-radius:6px;border:none;cursor:pointer;flex-shrink:0;">Read more &#9662;</button>
+          <div class="dc-detail" style="display:none;">
+            <ul style="padding-left:18px;margin:0;display:flex;flex-direction:column;gap:7px;">
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Hepatitis B (HBV)</strong> spreads through blood, sexual contact, and from mother to baby at birth. A safe and effective vaccine has existed since 1982 — all unvaccinated adults at risk should be vaccinated.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Hepatitis C (HCV)</strong> spreads mainly through blood-to-blood contact — shared needles, tattooing with unsterile equipment, or rarely through sexual contact. There is no vaccine for HCV.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>HCV is now curable</strong> — direct-acting antivirals (DAAs) achieve sustained virologic response (cure) in over 95% of patients after just 8–12 weeks of oral pills, with minimal side effects.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>HBV cannot be cured</strong> but can be controlled with antiviral medications (tenofovir, entecavir). Treatment suppresses the virus and dramatically reduces the risk of cirrhosis and liver cancer.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">Chronic infection with either virus can silently cause <strong>cirrhosis and liver cancer over decades</strong> — which is why testing and treatment are essential even when there are no symptoms.</li>
+            </ul>
+            <div style="margin-top:10px;display:flex;align-items:center;gap:6px;">
+              <span title="AASLD HBV Guidance 2023 · AASLD HCV Guidance 2023 · WHO Global Hepatitis Report 2024 · EASL Clinical Practice Guidelines HCV 2022 · EASL HBV Guidelines 2023" style="cursor:help;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#002147;color:#c9a84c;font-size:11px;font-weight:700;flex-shrink:0;">i</span>
+              <span style="font-size:11px;color:#9ca3af;">Hover the icon to see sources</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HEP CARD 2: Hep C cure — wide -->
+      <div class="dc-card dc-wide" data-topic="hepatitis">
+        <div class="dc-img-wrap" style="background:#091520;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+          <svg viewBox="0 0 400 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+            <rect width="400" height="180" fill="#091520"/>
+            <ellipse cx="320" cy="90" rx="110" ry="80" fill="#27ae60" opacity=".05"/>
+            <!-- pill icon -->
+            <ellipse cx="80" cy="90" rx="40" ry="22" fill="#0d2137" stroke="#3498db" stroke-width="1.5"/>
+            <line x1="80" y1="68" x2="80" y2="112" stroke="#3498db" stroke-width="1" stroke-dasharray="3,2"/>
+            <ellipse cx="60" cy="90" rx="20" ry="22" fill="#3498db" opacity=".3"/>
+            <text x="80" y="130" text-anchor="middle" font-family="Arial" font-size="8" fill="#3498db">DAA pill</text>
+            <!-- timeline -->
+            <line x1="140" y1="90" x2="360" y2="90" stroke="#1e4060" stroke-width="1.5"/>
+            <g font-family="Arial" font-size="8">
+              <circle cx="155" cy="90" r="5" fill="#e74c3c"/>
+              <text x="155" y="108" text-anchor="middle" fill="#e74c3c">Start</text>
+              <text x="155" y="118" text-anchor="middle" fill="#8fa3bc">Day 1</text>
+
+              <circle cx="230" cy="90" r="5" fill="#c9a84c"/>
+              <text x="230" y="108" text-anchor="middle" fill="#c9a84c">Virus</text>
+              <text x="230" y="118" text-anchor="middle" fill="#8fa3bc">undetectable</text>
+              <text x="230" y="128" text-anchor="middle" fill="#8fa3bc">Wk 4</text>
+
+              <circle cx="300" cy="90" r="5" fill="#27ae60"/>
+              <text x="300" y="108" text-anchor="middle" fill="#27ae60">EOT</text>
+              <text x="300" y="118" text-anchor="middle" fill="#8fa3bc">Wk 8–12</text>
+
+              <circle cx="360" cy="90" r="8" fill="#27ae60" opacity=".3" stroke="#27ae60" stroke-width="1.5"/>
+              <text x="360" y="87" text-anchor="middle" font-size="10" fill="#27ae60">✓</text>
+              <text x="360" y="108" text-anchor="middle" fill="#27ae60" font-weight="600">SVR</text>
+              <text x="360" y="118" text-anchor="middle" fill="#8fa3bc">Cured</text>
+              <text x="360" y="128" text-anchor="middle" fill="#8fa3bc">Wk 24</text>
+            </g>
+            <!-- SVR rate callout -->
+            <rect x="135" y="30" width="100" height="40" rx="6" fill="#0d3320" stroke="#27ae60" stroke-width="1"/>
+            <text x="185" y="50" text-anchor="middle" font-family="Arial" font-size="14" fill="#27ae60" font-weight="700">&gt;95%</text>
+            <text x="185" y="63" text-anchor="middle" font-family="Arial" font-size="8" fill="#8fa3bc">cure rate (SVR12)</text>
+            <text x="200" y="168" text-anchor="middle" font-family="Arial" font-size="9" fill="#6b7a9a" letter-spacing="2">HEPATITIS C TREATMENT</text>
+          </svg>
+          <span class="dc-topic">Hep C Cure</span>
+        </div>
+        <div class="dc-body">
+          <h3 class="dc-question">Is hepatitis C really curable, and who qualifies for treatment?</h3>
+          <p class="dc-answer">Yes — hepatitis C is now curable for more than 95% of patients using a short course of direct-acting antiviral (DAA) pills taken for 8 to 12 weeks. Almost everyone with chronic hepatitis C should be treated, regardless of fibrosis stage.</p>
+          <button class="dc-more-btn" onclick="toggleDetail(this)" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:600;color:#fff;background:#002147;padding:6px 14px;border-radius:6px;border:none;cursor:pointer;flex-shrink:0;">Read more &#9662;</button>
+          <div class="dc-detail" style="display:none;">
+            <ul style="padding-left:18px;margin:0;display:flex;flex-direction:column;gap:7px;">
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>DAA regimens</strong> such as sofosbuvir/velpatasvir (Epclusa) and glecaprevir/pibrentasvir (Mavyret) achieve cure (SVR12 — no detectable virus 12 weeks after treatment ends) in over 95% of patients.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>All adults with chronic HCV</strong> should receive treatment regardless of fibrosis stage, per 2023 AASLD and 2022 EASL guidelines. There are no longer reasons to defer treatment in stable patients.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">Treatment typically lasts <strong>8 weeks for most genotype 1 patients without cirrhosis</strong> and 12 weeks for those with cirrhosis or other genotypes.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">Cure dramatically reduces the risk of <strong>cirrhosis, liver cancer, and liver-related death</strong>. It also improves fatigue, quality of life, and protects others from transmission.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">After cure, <strong>patients with advanced fibrosis or cirrhosis</strong> still need ongoing liver cancer surveillance and monitoring, as residual risk remains — the cure removes the virus, not the scarring already present.</li>
+            </ul>
+            <div style="margin-top:10px;display:flex;align-items:center;gap:6px;">
+              <span title="AASLD HCV Guidance 2023 · EASL Recommendations on HCV 2022 · Zeuzem S, J Hepatol 2023 · Polaris Observatory HCV Collaborators, Lancet 2022" style="cursor:help;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#002147;color:#c9a84c;font-size:11px;font-weight:700;flex-shrink:0;">i</span>
+              <span style="font-size:11px;color:#9ca3af;">Hover the icon to see sources</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HEP CARD 3: Hep B treatment — std -->
+      <div class="dc-card dc-std" data-topic="hepatitis">
+        <div class="dc-img-wrap" style="background:#0a1a10;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+          <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&auto=format&fit=crop&q=80" alt="Antiviral medication tablets" class="dc-img">
+          <span class="dc-topic">Hepatitis B</span>
+        </div>
+        <div class="dc-body">
+          <h3 class="dc-question">When is treatment needed for hepatitis B, and what does it involve?</h3>
+          <p class="dc-answer">Not everyone with hepatitis B needs medication immediately, but those with active viral replication, liver inflammation, or advanced fibrosis should receive lifelong antiviral therapy to protect the liver.</p>
+          <button class="dc-more-btn" onclick="toggleDetail(this)" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:600;color:#fff;background:#002147;padding:6px 14px;border-radius:6px;border:none;cursor:pointer;flex-shrink:0;">Read more &#9662;</button>
+          <div class="dc-detail" style="display:none;">
+            <ul style="padding-left:18px;margin:0;display:flex;flex-direction:column;gap:7px;">
+              <li style="font-size:12px;color:#374151;line-height:1.65;">Treatment is indicated when HBV DNA is high (&gt;2,000 IU/mL) with elevated ALT or significant liver fibrosis. The <strong>2023 AASLD HBV guidance</strong> has expanded treatment thresholds compared to previous guidelines.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">First-line antivirals are <strong>tenofovir alafenamide (TAF) or entecavir</strong> — both are highly effective, well-tolerated, and taken as a single daily pill.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">Treatment is <strong>usually lifelong</strong> — stopping medication can cause dangerous flare-ups. Only a small number of patients who achieve HBsAg (surface antigen) clearance may safely discontinue under close monitoring.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">Even patients not yet needing treatment require <strong>regular monitoring</strong> — HBV DNA, ALT, and liver imaging — as their status can change over time.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">All household contacts and sexual partners of HBV-infected individuals should be <strong>tested and vaccinated</strong> if not immune.</li>
+            </ul>
+            <div style="margin-top:10px;display:flex;align-items:center;gap:6px;">
+              <span title="AASLD HBV Practice Guidance 2023 · EASL Clinical Practice Guidelines HBV 2023 · Terrault NA et al., Hepatology 2018 · Lok AS, Nat Rev Gastroenterol 2023" style="cursor:help;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#002147;color:#c9a84c;font-size:11px;font-weight:700;flex-shrink:0;">i</span>
+              <span style="font-size:11px;color:#9ca3af;">Hover the icon to see sources</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HEP CARD 4: Autoimmune hepatitis — std -->
+      <div class="dc-card dc-std" data-topic="hepatitis">
+        <div class="dc-img-wrap" style="background:#0a1628;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+          <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+            <rect width="400" height="200" fill="#0a1628"/>
+            <ellipse cx="290" cy="100" rx="120" ry="90" fill="#e74c3c" opacity=".05"/>
+            <!-- liver outline -->
+            <path d="M80,80 Q120,50 180,60 Q240,70 260,105 Q280,140 250,160 Q210,175 170,160 Q120,145 90,120 Q65,100 80,80Z" fill="#3a0d0d" opacity=".5" stroke="#e74c3c" stroke-width="1"/>
+            <!-- immune cells attacking -->
+            <g fill="#e74c3c" opacity=".7">
+              <circle cx="140" cy="90" r="6"/><circle cx="180" cy="75" r="5"/>
+              <circle cx="215" cy="95" r="7"/><circle cx="195" cy="125" r="5"/>
+              <circle cx="155" cy="130" r="6"/>
+            </g>
+            <!-- arrows showing immune attack -->
+            <g stroke="#e74c3c" stroke-width=".8" opacity=".5">
+              <line x1="125" y1="100" x2="138" y2="92"/><line x1="165" y1="82" x2="178" y2="76"/>
+              <line x1="202" y1="100" x2="213" y2="96"/><line x1="183" y1="128" x2="193" y2="126"/>
+            </g>
+            <!-- label -->
+            <rect x="270" y="55" width="100" height="50" rx="5" fill="#0d2137" stroke="#1e4060" stroke-width=".8"/>
+            <text x="320" y="77" text-anchor="middle" font-family="Arial" font-size="8" fill="#e74c3c">Immune cells</text>
+            <text x="320" y="90" text-anchor="middle" font-family="Arial" font-size="8" fill="#8fa3bc">attack own</text>
+            <text x="320" y="103" text-anchor="middle" font-family="Arial" font-size="8" fill="#8fa3bc">liver tissue</text>
+            <text x="200" y="185" text-anchor="middle" font-family="Arial" font-size="9" fill="#6b7a9a" letter-spacing="2">AUTOIMMUNE HEPATITIS</text>
+          </svg>
+          <span class="dc-topic">Autoimmune</span>
+        </div>
+        <div class="dc-body">
+          <h3 class="dc-question">What is autoimmune hepatitis and how is it treated?</h3>
+          <p class="dc-answer">Autoimmune hepatitis (AIH) is a chronic condition where the immune system mistakenly attacks liver cells. It is treatable — most patients achieve remission with immunosuppressive medications.</p>
+          <button class="dc-more-btn" onclick="toggleDetail(this)" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:600;color:#fff;background:#002147;padding:6px 14px;border-radius:6px;border:none;cursor:pointer;flex-shrink:0;">Read more &#9662;</button>
+          <div class="dc-detail" style="display:none;">
+            <ul style="padding-left:18px;margin:0;display:flex;flex-direction:column;gap:7px;">
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>AIH</strong> occurs when the immune system produces antibodies (ANA, anti-SMA, anti-LKM1) that target hepatocytes. It can affect all ages but is most common in women.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">Symptoms range from none (found on routine blood tests) to <strong>jaundice, fatigue, abdominal pain, and acute liver failure</strong> in severe cases.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>First-line treatment</strong> is prednisolone (a corticosteroid), usually combined with azathioprine to allow steroid dose reduction. Remission is achieved in over 80% of patients.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">Treatment is often <strong>long-term or lifelong</strong> — relapse is common after stopping medications. Regular blood monitoring is essential.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">If AIH is not treated, it can progress to <strong>cirrhosis and liver failure</strong>. With treatment, most patients have a normal life expectancy.</li>
+            </ul>
+            <div style="margin-top:10px;display:flex;align-items:center;gap:6px;">
+              <span title="EASL Clinical Practice Guidelines Autoimmune Hepatitis 2015 (reaffirmed 2022) · AASLD AIH Practice Guidelines · Mack CL et al., Hepatology 2020" style="cursor:help;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#002147;color:#c9a84c;font-size:11px;font-weight:700;flex-shrink:0;">i</span>
+              <span style="font-size:11px;color:#9ca3af;">Hover the icon to see sources</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HEP CARD 5: Hep A & E — wide -->
+      <div class="dc-card dc-wide" data-topic="hepatitis">
+        <div class="dc-img-wrap" style="background:#091520;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+          <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=800&auto=format&fit=crop&q=80" alt="Clean water and food safety" class="dc-img">
+          <span class="dc-topic">Hepatitis A &amp; E</span>
+        </div>
+        <div class="dc-body">
+          <h3 class="dc-question">What are hepatitis A and E — are they dangerous?</h3>
+          <p class="dc-answer">Hepatitis A and E are both spread through contaminated food or water and typically cause acute illness that resolves on its own. Unlike hepatitis B and C, they do not cause chronic infection in most people. Hepatitis E can be severe in pregnancy.</p>
+          <button class="dc-more-btn" onclick="toggleDetail(this)" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:600;color:#fff;background:#002147;padding:6px 14px;border-radius:6px;border:none;cursor:pointer;flex-shrink:0;">Read more &#9662;</button>
+          <div class="dc-detail" style="display:none;">
+            <ul style="padding-left:18px;margin:0;display:flex;flex-direction:column;gap:7px;">
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Hepatitis A (HAV)</strong> spreads through contaminated food and water and person-to-person contact. Most people fully recover within 4–8 weeks. A safe, effective vaccine exists — recommended for travellers, food handlers, and those with chronic liver disease.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Hepatitis E (HEV)</strong> is the most common cause of acute viral hepatitis worldwide, spread mainly through contaminated drinking water in low-income countries. In high-income countries, undercooked pork is a common source.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Hepatitis E in pregnancy</strong> carries a mortality risk of up to 25% in the third trimester and requires urgent specialist management. Immunosuppressed patients (e.g., transplant recipients) can also develop chronic HEV.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Symptoms of both</strong> include fatigue, jaundice, dark urine, pale stools, nausea, and upper right abdominal discomfort — similar to many other liver conditions.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">People with <strong>pre-existing chronic liver disease</strong> who develop HAV or HEV face a higher risk of acute-on-chronic liver failure and should avoid exposure through vaccination (HAV) and food hygiene (both).</li>
+            </ul>
+            <div style="margin-top:10px;display:flex;align-items:center;gap:6px;">
+              <span title="WHO Hepatitis A Fact Sheet 2024 · WHO Hepatitis E Fact Sheet 2023 · EASL CPG Hepatitis E 2018 · AASLD HAV/HEV Practice Guidance 2022" style="cursor:help;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#002147;color:#c9a84c;font-size:11px;font-weight:700;flex-shrink:0;">i</span>
+              <span style="font-size:11px;color:#9ca3af;">Hover the icon to see sources</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end hepatitis grid -->
   </div>
 
   <!-- PREVENTION PAGE -->
   <div id="topic-prevention" style="display:none;">
     <div class="section-label">Prevention</div>
-    <div class="coming-soon-box">
-      <p class="coming-soon-title">Coming soon</p>
-      <p class="coming-soon-sub">Questions and answers about liver disease prevention will be added here shortly.</p>
-    </div>
+    <div class="discover-grid">
+
+      <!-- PREV CARD 1: Alcohol limits — tall -->
+      <div class="dc-card dc-tall" data-topic="prevention">
+        <div class="dc-img-wrap" style="background:#0a0e1a;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+          <svg viewBox="0 0 400 340" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+            <rect width="400" height="340" fill="#0a0e1a"/>
+            <ellipse cx="310" cy="170" rx="130" ry="120" fill="#e74c3c" opacity=".04"/>
+            <!-- glass icon -->
+            <path d="M160,40 L140,150 Q160,175 200,175 Q240,175 260,150 L240,40 Z" fill="#0d2137" stroke="#4a9eff" stroke-width="1.5" opacity=".8"/>
+            <path d="M165,45 L148,130 Q165,155 200,155 Q235,155 252,130 L235,45 Z" fill="#3498db" opacity=".15"/>
+            <!-- liquid level -->
+            <path d="M152,120 Q200,130 248,120 L252,130 Q235,155 200,155 Q165,155 148,130Z" fill="#3498db" opacity=".35"/>
+            <!-- X mark over glass -->
+            <circle cx="200" cy="108" r="55" fill="none" stroke="#e74c3c" stroke-width="3" opacity=".7"/>
+            <line x1="170" y1="78" x2="230" y2="138" stroke="#e74c3c" stroke-width="3" stroke-linecap="round" opacity=".8"/>
+            <line x1="230" y1="78" x2="170" y2="138" stroke="#e74c3c" stroke-width="3" stroke-linecap="round" opacity=".8"/>
+            <!-- limits table -->
+            <rect x="30" y="210" width="340" height="100" rx="8" fill="#0d2137" stroke="#1e4060" stroke-width="1"/>
+            <text x="200" y="228" text-anchor="middle" font-family="Arial" font-size="9" fill="#c9a84c" font-weight="600" letter-spacing="1">SAFE LIMITS — WHO / NIAAA 2024</text>
+            <line x1="40" y1="233" x2="360" y2="233" stroke="#1e4060" stroke-width=".5"/>
+            <g font-family="Arial" font-size="9" fill="#8fa3bc">
+              <text x="55" y="252">Men</text>
+              <text x="200" y="252" text-anchor="middle" fill="#c9a84c">≤ 14 units / week</text>
+              <text x="55" y="272">Women</text>
+              <text x="200" y="272" text-anchor="middle" fill="#c9a84c">≤ 14 units / week</text>
+              <text x="55" y="292">Best for liver</text>
+              <text x="200" y="292" text-anchor="middle" fill="#27ae60">None at all</text>
+              <text x="55" y="302" font-size="8" fill="#6b7a9a">(1 unit = 10 g pure alcohol)</text>
+            </g>
+            <text x="200" y="325" text-anchor="middle" font-family="Arial" font-size="9" fill="#6b7a9a" letter-spacing="2">ALCOHOL &amp; THE LIVER</text>
+          </svg>
+          <span class="dc-topic">Alcohol</span>
+        </div>
+        <div class="dc-body">
+          <h3 class="dc-question">How much alcohol is safe for the liver?</h3>
+          <p class="dc-answer">No amount of alcohol is completely safe for the liver. Current guidelines suggest that if you drink, staying within 14 units per week (both men and women) lowers liver risk — but the safest choice for liver health is not drinking at all.</p>
+          <button class="dc-more-btn" onclick="toggleDetail(this)" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:600;color:#fff;background:#002147;padding:6px 14px;border-radius:6px;border:none;cursor:pointer;flex-shrink:0;">Read more &#9662;</button>
+          <div class="dc-detail" style="display:none;">
+            <ul style="padding-left:18px;margin:0;display:flex;flex-direction:column;gap:7px;">
+              <li style="font-size:12px;color:#374151;line-height:1.65;">The <strong>2024 World Health Organization report</strong> concluded there is no safe level of alcohol for health. Even low amounts increase the risk of liver injury, some cancers, and other conditions over a lifetime.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Alcohol-associated liver disease (ALD)</strong> progresses from fatty liver → hepatitis → fibrosis → cirrhosis. Continued heavy drinking dramatically accelerates this progression.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">If you already have <strong>fatty liver disease (MASLD)</strong>, alcohol intake — even at moderate levels — can accelerate liver damage. The EASL–EASD–EASO 2024 guidelines recommend complete avoidance.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">The liver can repair itself in the <strong>early stages of alcohol-related damage</strong> — stopping drinking at the fatty liver or early hepatitis stage can fully reverse the injury.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">If you are struggling to cut back on alcohol, your doctor can refer you to <strong>specialist alcohol support services</strong>. Medications like acamprosate and naltrexone are effective aids for alcohol use disorder.</li>
+            </ul>
+            <div style="margin-top:10px;display:flex;align-items:center;gap:6px;">
+              <span title="WHO No Safe Level Report 2023 · NIAAA Dietary Guidelines 2024 · EASL–EASD–EASO Guidelines 2024 · AASLD Alcohol-Associated Liver Disease Guidance 2023" style="cursor:help;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#002147;color:#c9a84c;font-size:11px;font-weight:700;flex-shrink:0;">i</span>
+              <span style="font-size:11px;color:#9ca3af;">Hover the icon to see sources</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PREV CARD 2: Vaccination — wide -->
+      <div class="dc-card dc-wide" data-topic="prevention">
+        <div class="dc-img-wrap" style="background:#091520;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+          <svg viewBox="0 0 400 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+            <rect width="400" height="180" fill="#091520"/>
+            <ellipse cx="330" cy="90" rx="110" ry="80" fill="#27ae60" opacity=".05"/>
+            <!-- syringe -->
+            <rect x="30" y="82" width="100" height="16" rx="4" fill="#0d2137" stroke="#4a9eff" stroke-width="1.2"/>
+            <rect x="33" y="85" width="55" height="10" rx="2" fill="#3498db" opacity=".3"/>
+            <line x1="130" y1="88" x2="145" y2="88" stroke="#4a9eff" stroke-width="2"/>
+            <line x1="145" y1="85" x2="155" y2="90" stroke="#4a9eff" stroke-width="1.5"/>
+            <!-- shields -->
+            <g>
+              <path d="M185,55 L220,55 L235,70 L235,110 Q220,125 202,130 Q185,125 170,110 L170,70 Z" fill="#0d3320" stroke="#27ae60" stroke-width="1.5"/>
+              <text x="202" y="97" text-anchor="middle" font-family="Arial" font-size="20" fill="#27ae60">✓</text>
+              <text x="202" y="145" text-anchor="middle" font-family="Arial" font-size="8" fill="#27ae60">Hep A</text>
+
+              <path d="M255,55 L290,55 L305,70 L305,110 Q290,125 272,130 Q255,125 240,110 L240,70 Z" fill="#0d3320" stroke="#27ae60" stroke-width="1.5"/>
+              <text x="272" y="97" text-anchor="middle" font-family="Arial" font-size="20" fill="#27ae60">✓</text>
+              <text x="272" y="145" text-anchor="middle" font-family="Arial" font-size="8" fill="#27ae60">Hep B</text>
+
+              <path d="M325,55 L360,55 L375,70 L375,110 Q360,125 342,130 Q325,125 310,110 L310,70 Z" fill="#1a1a0d" stroke="#c9a84c" stroke-width="1.5" stroke-dasharray="4,2"/>
+              <text x="342" y="97" text-anchor="middle" font-family="Arial" font-size="20" fill="#c9a84c">?</text>
+              <text x="342" y="145" text-anchor="middle" font-family="Arial" font-size="8" fill="#c9a84c">Hep C</text>
+              <text x="342" y="156" text-anchor="middle" font-family="Arial" font-size="7" fill="#6b7a9a">(no vaccine)</text>
+            </g>
+            <text x="200" y="170" text-anchor="middle" font-family="Arial" font-size="9" fill="#6b7a9a" letter-spacing="2">LIVER DISEASE VACCINES</text>
+          </svg>
+          <span class="dc-topic">Vaccination</span>
+        </div>
+        <div class="dc-body">
+          <h3 class="dc-question">Which vaccinations protect the liver, and who should get them?</h3>
+          <p class="dc-answer">Hepatitis A and hepatitis B vaccines provide excellent protection. People with chronic liver disease, including fatty liver, are especially encouraged to be vaccinated against both, as any additional liver injury is more dangerous in an already-damaged liver.</p>
+          <button class="dc-more-btn" onclick="toggleDetail(this)" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:600;color:#fff;background:#002147;padding:6px 14px;border-radius:6px;border:none;cursor:pointer;flex-shrink:0;">Read more &#9662;</button>
+          <div class="dc-detail" style="display:none;">
+            <ul style="padding-left:18px;margin:0;display:flex;flex-direction:column;gap:7px;">
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Hepatitis B vaccine</strong> (3-dose series): recommended for all adults up to age 59 and for those 60+ who choose vaccination. It is especially important for healthcare workers, people with chronic liver disease, and anyone at risk through sexual contact or needle sharing.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Heplisav-B</strong> (2-dose series given 1 month apart) is an alternative approved for adults 18+, offering a faster and more convenient schedule.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Hepatitis A vaccine</strong> (2-dose series): recommended for travellers to higher-risk countries, people with chronic liver disease, people who use drugs, and anyone without prior immunity. Highly effective.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">Both vaccines are <strong>safe for people with fatty liver disease, hepatitis B or C, or cirrhosis</strong> — indeed, vaccination is especially important for these groups because they have limited liver reserve.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">There is currently <strong>no vaccine for hepatitis C</strong>. Prevention relies on avoiding blood-to-blood contact, never sharing needles, and using sterile equipment for tattoos and piercings.</li>
+            </ul>
+            <div style="margin-top:10px;display:flex;align-items:center;gap:6px;">
+              <span title="CDC Hepatitis A &amp; B Vaccination Recommendations 2023 · ACIP Updated Hep B Recommendations 2022 · WHO Position Papers HAV/HBV 2022 · AASLD Chronic Liver Disease Vaccination Guidance" style="cursor:help;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#002147;color:#c9a84c;font-size:11px;font-weight:700;flex-shrink:0;">i</span>
+              <span style="font-size:11px;color:#9ca3af;">Hover the icon to see sources</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PREV CARD 3: Weight & metabolic risk — std -->
+      <div class="dc-card dc-std" data-topic="prevention">
+        <div class="dc-img-wrap" style="background:#0a1628;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+          <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+            <rect width="400" height="200" fill="#0a1628"/>
+            <ellipse cx="290" cy="100" rx="130" ry="90" fill="#27ae60" opacity=".05"/>
+            <!-- scale -->
+            <ellipse cx="170" cy="145" rx="60" ry="12" fill="#0d2137" stroke="#4a9eff" stroke-width="1"/>
+            <rect x="140" y="90" width="60" height="55" rx="6" fill="#0d2137" stroke="#4a9eff" stroke-width="1"/>
+            <!-- dial -->
+            <circle cx="170" cy="118" r="22" fill="#091520" stroke="#4a9eff" stroke-width="1"/>
+            <line x1="170" y1="118" x2="185" y2="102" stroke="#27ae60" stroke-width="2" stroke-linecap="round"/>
+            <!-- % weight callout -->
+            <rect x="250" y="55" width="115" height="70" rx="8" fill="#0d3320" stroke="#27ae60" stroke-width="1"/>
+            <text x="307" y="80" text-anchor="middle" font-family="Arial" font-size="20" fill="#27ae60" font-weight="700">7–10%</text>
+            <text x="307" y="95" text-anchor="middle" font-family="Arial" font-size="8" fill="#8fa3bc">weight loss</text>
+            <text x="307" y="109" text-anchor="middle" font-family="Arial" font-size="8" fill="#27ae60">reduces liver fat</text>
+            <text x="307" y="120" text-anchor="middle" font-family="Arial" font-size="8" fill="#27ae60">&amp; inflammation</text>
+            <text x="200" y="185" text-anchor="middle" font-family="Arial" font-size="9" fill="#6b7a9a" letter-spacing="2">WEIGHT MANAGEMENT</text>
+          </svg>
+          <span class="dc-topic">Weight</span>
+        </div>
+        <div class="dc-body">
+          <h3 class="dc-question">How much weight loss is needed to improve liver health?</h3>
+          <p class="dc-answer">Losing just 5–7% of body weight reduces liver fat, and losing 7–10% can resolve inflammation and halt or reverse early scarring. Even modest weight loss has measurable benefits.</p>
+          <button class="dc-more-btn" onclick="toggleDetail(this)" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:600;color:#fff;background:#002147;padding:6px 14px;border-radius:6px;border:none;cursor:pointer;flex-shrink:0;">Read more &#9662;</button>
+          <div class="dc-detail" style="display:none;">
+            <ul style="padding-left:18px;margin:0;display:flex;flex-direction:column;gap:7px;">
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>5% weight loss</strong> reduces liver fat content measurably. At <strong>7–10%</strong>, liver inflammation (MASH) resolves in most patients. At <strong>≥10%</strong>, fibrosis regression is seen in many patients.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">The best approach is <strong>gradual, sustained weight loss</strong> of 0.5–1 kg per week through a calorie-reduced Mediterranean-style diet combined with regular physical activity.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>GLP-1 receptor agonists</strong> (semaglutide, liraglutide) have shown significant liver fat reduction and MASH resolution in clinical trials — discuss eligibility with your doctor if lifestyle changes alone are insufficient.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Bariatric surgery</strong> (sleeve gastrectomy, Roux-en-Y bypass) leads to dramatic liver improvement in eligible patients and is the most effective intervention for severe obesity with MASLD.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">Even in patients who cannot lose weight, controlling <strong>blood sugar, blood pressure, and lipids</strong> reduces the metabolic drivers of liver disease and slows progression.</li>
+            </ul>
+            <div style="margin-top:10px;display:flex;align-items:center;gap:6px;">
+              <span title="EASL–EASD–EASO Guidelines 2024 · AASLD MASLD Guidance 2023 · Newsome PN et al., NEJM 2021 (semaglutide trial) · Younossi ZM et al., Hepatology 2023" style="cursor:help;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#002147;color:#c9a84c;font-size:11px;font-weight:700;flex-shrink:0;">i</span>
+              <span style="font-size:11px;color:#9ca3af;">Hover the icon to see sources</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PREV CARD 4: Medications & supplements — std -->
+      <div class="dc-card dc-std" data-topic="prevention">
+        <div class="dc-img-wrap" style="background:#0a0e1a;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+          <img src="https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=600&auto=format&fit=crop&q=80" alt="Assorted supplement capsules" class="dc-img">
+          <span class="dc-topic">Medications</span>
+        </div>
+        <div class="dc-body">
+          <h3 class="dc-question">Can any medications or supplements harm the liver?</h3>
+          <p class="dc-answer">Yes — drug-induced liver injury (DILI) is a real risk with both prescription medications and herbal supplements. Some common supplements like high-dose vitamin E, green tea extract, and certain herbal remedies have caused liver damage.</p>
+          <button class="dc-more-btn" onclick="toggleDetail(this)" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:600;color:#fff;background:#002147;padding:6px 14px;border-radius:6px;border:none;cursor:pointer;flex-shrink:0;">Read more &#9662;</button>
+          <div class="dc-detail" style="display:none;">
+            <ul style="padding-left:18px;margin:0;display:flex;flex-direction:column;gap:7px;">
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Drug-induced liver injury (DILI)</strong> can be caused by prescription drugs, over-the-counter medications, and herbal or dietary supplements. The most commonly implicated are antibiotics (amoxicillin-clavulanate), isoniazid, NSAIDs in high doses, and statins (rarely).</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Herbal and dietary supplements</strong> are a growing cause of DILI — accounting for 20% of cases in the US. High-risk products include green tea extract, kava, black cohosh, and bodybuilding supplements containing anabolic steroids.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Acetaminophen (paracetamol/Tylenol)</strong> is the most common cause of acute liver failure in the US when taken in overdose. People with liver disease should keep to the lowest effective dose (≤2 g/day).</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">Always tell your doctor and pharmacist about <strong>all supplements and herbal products</strong> you take — they are not regulated the same way as medications and interactions can be serious.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Statins are generally safe</strong> in patients with fatty liver disease and are often beneficial for cardiovascular protection — do not stop statins because of mild liver enzyme elevations without consulting your doctor.</li>
+            </ul>
+            <div style="margin-top:10px;display:flex;align-items:center;gap:6px;">
+              <span title="Chalasani N et al., Hepatology 2021 (DILI Guidelines) · LiverTox NIH 2024 · EASL CPG Drug-Induced Liver Injury 2019 · Björnsson ES, J Hepatol 2022" style="cursor:help;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#002147;color:#c9a84c;font-size:11px;font-weight:700;flex-shrink:0;">i</span>
+              <span style="font-size:11px;color:#9ca3af;">Hover the icon to see sources</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PREV CARD 5: Coffee & liver — wide -->
+      <div class="dc-card dc-wide" data-topic="prevention">
+        <div class="dc-img-wrap" style="background:#0a0a08;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+          <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&auto=format&fit=crop&q=80" alt="Fresh brewed coffee cup" class="dc-img">
+          <span class="dc-topic">Coffee &amp; Liver</span>
+        </div>
+        <div class="dc-body">
+          <h3 class="dc-question">Is coffee actually good for the liver?</h3>
+          <p class="dc-answer">Yes — regular coffee consumption is one of the most consistently proven protective factors for the liver. Drinking 2–3 cups per day is associated with reduced liver inflammation, lower fibrosis risk, and a lower chance of liver cancer.</p>
+          <button class="dc-more-btn" onclick="toggleDetail(this)" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:600;color:#fff;background:#002147;padding:6px 14px;border-radius:6px;border:none;cursor:pointer;flex-shrink:0;">Read more &#9662;</button>
+          <div class="dc-detail" style="display:none;">
+            <ul style="padding-left:18px;margin:0;display:flex;flex-direction:column;gap:7px;">
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Multiple large studies</strong> show that drinking 2–3 cups of coffee per day is associated with 40–50% lower risk of liver cirrhosis, a 40% lower risk of HCC, and reduced liver enzyme levels.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">The benefit appears to come from <strong>cafestol, kahweol, chlorogenic acids, and other compounds</strong> in coffee — not caffeine alone. Decaffeinated coffee also shows benefit, suggesting multiple active components.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Both filtered and unfiltered coffee</strong> (espresso, French press) show liver benefits, though unfiltered coffee contains oils that may raise LDL cholesterol — filtered coffee is preferred for those with high cholesterol.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">The EASL 2024 guidelines acknowledge coffee as having a <strong>hepatoprotective effect</strong> in MASLD patients based on consistent epidemiological evidence.</li>
+              <li style="font-size:12px;color:#374151;line-height:1.65;">This benefit applies to <strong>black coffee without added sugar</strong> — sugary coffeehouse drinks with syrups can negate liver benefits by adding significant amounts of fructose and calories.</li>
+            </ul>
+            <div style="margin-top:10px;display:flex;align-items:center;gap:6px;">
+              <span title="Kennedy OJ et al., BMJ Open 2021 (meta-analysis) · EASL–EASD–EASO Guidelines 2024 · Sang LX et al., BMC Gastroenterol 2013 · Freedman ND et al., Hepatology 2012" style="cursor:help;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#002147;color:#c9a84c;font-size:11px;font-weight:700;flex-shrink:0;">i</span>
+              <span style="font-size:11px;color:#9ca3af;">Hover the icon to see sources</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end prevention grid -->
   </div>
 
 </div>
@@ -625,8 +1458,8 @@ function showTopic(btn, topic) {
 
 function toggleDetail(btn) {
   var detail = btn.nextElementSibling;
-  var isOpen = detail.classList.contains('open');
-  detail.classList.toggle('open');
+  var isOpen = detail.style.display === 'block';
+  detail.style.display = isOpen ? 'none' : 'block';
   btn.innerHTML = isOpen ? 'Read more &#9662;' : 'Read less &#9652;';
 }
 </script>
