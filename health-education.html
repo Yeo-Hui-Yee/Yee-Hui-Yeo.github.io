@@ -156,6 +156,21 @@
   }
   .dc-detail.open { display: block; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+  /* no-photo card variant */
+  .dc-no-img { border-top: 3px solid var(--accent); }
+  .dc-no-img .dc-header-bar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 16px 0;
+  }
+  .dc-no-img .dc-topic-inline {
+    background: #002147; color: #c9a84c;
+    font-size: 10px; font-weight: 600; letter-spacing: .06em;
+    padding: 3px 9px; border-radius: 99px; flex-shrink: 0;
+  }
+  /* empty photo placeholder */
+  .dc-img-placeholder {
+    height: 10px; background: transparent;
+  }
   /* responsive */
   .coming-soon-box {
     background: var(--white);
@@ -1021,7 +1036,7 @@
         </div>
       </div>
 
-      <!-- CIRRHOSIS CARD 2: Symptoms & complications — wide -->
+      <!-- CIRRHOSIS CARD 2: Complications — wide -->
       <div class="dc-card dc-wide" data-topic="cirrhosis">
         <div class="dc-img-wrap">
           <img src="https://images.unsplash.com/photo-1556750539-dc6305f4f248?w=800&auto=format&fit=crop&q=80" alt="Person lying on bed covering face with pillow" class="dc-img">
@@ -1066,105 +1081,4 @@
               <li style="font-size:12px;color:#374151;line-height:1.65;"><strong>Regular monitoring</strong> — 6-monthly liver ultrasound, endoscopy for varices, and blood tests — is essential. Ask your hepatologist about transplant assessment if you develop decompensation.</li>
             </ul>
             <div style="margin-top:10px;display:flex;align-items:center;gap:6px;">
-              <span title="EASL CPG Decompensated Cirrhosis 2021 · Berzigotti A et al., J Hepatol 2021 · AASLD Cirrhosis Guidance 2023 · Montano-Loza AJ, Hepatology 2022" style="cursor:help;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#002147;color:#c9a84c;font-size:11px;font-weight:700;flex-shrink:0;">i</span>
-              <span style="font-size:11px;color:#9ca3af;">Hover the icon to see sources</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- end cirrhosis grid -->
-  </div>
-
-</div>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <a class="footer-logo" href="#">
-      <div class="nav-logo-mark">YL</div>
-      <div>
-        <div class="footer-name">Yeo Lab</div>
-        <div class="footer-sub">Patient Education</div>
-      </div>
-    </a>
-    <div class="footer-right">
-      <p>For clinical inquiries: <a href="mailto:yeehui.yeo@cshs.org">yeehui.yeo@cshs.org</a></p>
-      <p><a href="index.html">← Back to Yeo Lab website</a></p>
-    </div>
-  </div>
-  <div class="disclaimer">
-    ⚠️ This content is for educational purposes only and does not replace professional medical advice. Always consult your doctor or a qualified healthcare provider for diagnosis and treatment decisions.
-  </div>
-</footer>
-
-<script>
-function showTopic(btn, topic) {
-  // Update active nav tab
-  document.querySelectorAll('.hed-tab').forEach(function(t) {
-    t.classList.remove('active');
-  });
-  btn.classList.add('active');
-
-  var fattySection = document.getElementById('section-fatty-liver');
-  var cancer       = document.getElementById('topic-liver-cancer');
-  var hepatitis    = document.getElementById('topic-hepatitis');
-  var prevention   = document.getElementById('topic-prevention');
-  var cirrhosis    = document.getElementById('topic-cirrhosis');
-  var label        = document.getElementById('topic-label');
-
-  // Hide ALL sections first
-  [fattySection, cancer, hepatitis, prevention, cirrhosis].forEach(function(s) {
-    if (s) s.style.display = 'none';
-  });
-
-  if (topic === 'all') {
-    // Show every section
-    [fattySection, cancer, hepatitis, prevention, cirrhosis].forEach(function(s) {
-      if (s) s.style.display = 'block';
-    });
-    // Make sure all fatty-liver cards are visible
-    document.querySelectorAll('#discover-grid .dc-card').forEach(function(c) {
-      c.style.display = 'flex';
-    });
-    if (label) label.textContent = 'All questions';
-
-  } else if (topic === 'fatty-liver') {
-    if (fattySection) fattySection.style.display = 'block';
-    document.querySelectorAll('#discover-grid .dc-card').forEach(function(c) {
-      c.style.display = 'flex';
-    });
-    if (label) label.textContent = 'Fatty Liver';
-
-  } else if (topic === 'liver-cancer') {
-    if (cancer) cancer.style.display = 'block';
-    if (label)  label.textContent = 'Liver Cancer';
-
-  } else if (topic === 'hepatitis') {
-    if (hepatitis) hepatitis.style.display = 'block';
-    if (label)     label.textContent = 'Hepatitis';
-
-  } else if (topic === 'prevention') {
-    if (prevention) prevention.style.display = 'block';
-    if (label)      label.textContent = 'Prevention';
-
-  } else if (topic === 'cirrhosis') {
-    if (cirrhosis) cirrhosis.style.display = 'block';
-    if (label)     label.textContent = 'Cirrhosis';
-  }
-
-  // Close mobile menu and scroll to top
-  var navLinks = document.getElementById('hed-nav-links');
-  if (navLinks) navLinks.classList.remove('open');
-  window.scrollTo(0, 0);
-}
-
-function toggleDetail(btn) {
-  var detail = btn.nextElementSibling;
-  var isOpen = detail.style.display === 'block';
-  detail.style.display = isOpen ? 'none' : 'block';
-  btn.innerHTML = isOpen ? 'Read more &#9662;' : 'Read less &#9652;';
-}
-</script>
-</body>
-</html>
+              <span title="EASL CPG Decompensated Cirrhosis 2021 · Berzigotti A et al., J Hepatol 2021 · AASLD Cirrhosis Guidance 2023 · Montano-Loza AJ, Hepatology 2022" style="cursor:help;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#002147;color:#c9a84c;font-size:11px;font-weight:700;flex-shrink:
